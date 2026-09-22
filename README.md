@@ -47,6 +47,7 @@ use <openscad/cutter.scad>
 | `fg_diff()` / role modules | explicit body/remove/keep CSG |
 | `fg_cut_*` / cutter objects | overlap-aware box and cylinder cutters |
 | `FG_LEFT()`, etc. | callable constant tokens for local cutter overlap |
+| `FG_OVERLAP_MM()` | fixed 0.001 mm Boolean robustness allowance |
 
 Documentation:
 

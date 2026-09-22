@@ -1,5 +1,14 @@
 # Changelog
 
+## Unreleased
+
+### Added
+
+- Add callable constant `FG_OVERLAP_MM()` for Forge's fixed 0.001 mm Boolean
+  robustness allowance. Existing `fg_overlap_mm()` remains as a compatibility
+  alias for v0.2.0 consumers; new/default code uses the callable constant.
+
+
 ## v0.2.0
 
 ### Changed

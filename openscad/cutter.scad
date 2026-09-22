@@ -3,13 +3,15 @@
 //   Overlap-aware Forge cutter specifications and geometry.
 //////////////////////////////////////////////////////////////////////
 
-_FG_BOOLEAN_OVERLAP_MM = 0.001;
+// Function: FG_OVERLAP_MM()
+// Synopsis: Returns the fixed default Boolean robustness overlap.
+function FG_OVERLAP_MM() = 0.001;
 
 
 // Function: fg_overlap_mm()
-// Synopsis: Returns the default Boolean robustness overlap.
+// Synopsis: Compatibility alias for FG_OVERLAP_MM().
 function fg_overlap_mm() =
-    _FG_BOOLEAN_OVERLAP_MM;
+    FG_OVERLAP_MM();
 
 
 // Function: FG_LEFT()
@@ -61,7 +63,7 @@ function fg_box_cutter_create(
         FG_BOTTOM(),
         FG_TOP()
     ],
-    overlap_mm = fg_overlap_mm()
+    overlap_mm = FG_OVERLAP_MM()
 ) =
     assert(
         is_list(size_mm) && len(size_mm) == 3 && min(size_mm) > 0,
@@ -115,7 +117,7 @@ function fg_cylinder_cutter_create(
         FG_BOTTOM(),
         FG_TOP()
     ],
-    overlap_mm = fg_overlap_mm()
+    overlap_mm = FG_OVERLAP_MM()
 ) =
     assert(
         diameter_mm > 0,
@@ -184,7 +186,7 @@ module fg_cut_box(
         FG_BOTTOM(),
         FG_TOP()
     ],
-    overlap_mm = fg_overlap_mm()
+    overlap_mm = FG_OVERLAP_MM()
 ) {
     fg_cutter_build(
         fg_box_cutter_create(
@@ -210,7 +212,7 @@ module fg_cut_cylinder(
         FG_BOTTOM(),
         FG_TOP()
     ],
-    overlap_mm = fg_overlap_mm()
+    overlap_mm = FG_OVERLAP_MM()
 ) {
     fg_cutter_build(
         fg_cylinder_cutter_create(
