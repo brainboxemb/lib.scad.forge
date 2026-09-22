@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## v0.3.0
+
 ### Added
 
 - Add `fg_xf_xzmove()` and `fg_xf_yzmove()` for readable placement of
