@@ -20,15 +20,15 @@ else if (test_cutter == "box-faces") {
         fg_box_cutter_create(
             size_mm = [4, 5, 6],
             overlap = [
-                fg_left(),
-                fg_right(),
-                fg_back()
+                FG_LEFT(),
+                FG_RIGHT(),
+                FG_BACK()
             ]
         );
 
-    assert(_fg_test_has(_cutter.overlap, fg_left()));
-    assert(_fg_test_has(_cutter.overlap, fg_right()));
-    assert(_fg_test_has(_cutter.overlap, fg_back()));
+    assert(_fg_test_has(_cutter.overlap, FG_LEFT()));
+    assert(_fg_test_has(_cutter.overlap, FG_RIGHT()));
+    assert(_fg_test_has(_cutter.overlap, FG_BACK()));
 
     fg_cutter_build(_cutter);
 }
@@ -52,14 +52,14 @@ else if (test_cutter == "cylinder-faces") {
             diameter_mm = 5,
             height_mm = 8,
             overlap = [
-                fg_radial(),
-                fg_top()
+                FG_RADIAL(),
+                FG_TOP()
             ]
         );
 
-    assert(_fg_test_has(_cutter.overlap, fg_radial()));
-    assert(!_fg_test_has(_cutter.overlap, fg_bottom()));
-    assert(_fg_test_has(_cutter.overlap, fg_top()));
+    assert(_fg_test_has(_cutter.overlap, FG_RADIAL()));
+    assert(!_fg_test_has(_cutter.overlap, FG_BOTTOM()));
+    assert(_fg_test_has(_cutter.overlap, FG_TOP()));
 
     fg_cutter_build(_cutter);
 }

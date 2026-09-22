@@ -23,9 +23,9 @@ fg_diff() {
         fg_cut_box(
             size_mm = [10, 20, 5],
             overlap = [
-                fg_left(),
-                fg_right(),
-                fg_back()
+                FG_LEFT(),
+                FG_RIGHT(),
+                FG_BACK()
             ]
         );
 }
@@ -46,7 +46,7 @@ use <openscad/cutter.scad>
 | `fg_xf_*` | moves, rotations, mirrors, transform objects and coordinate frames |
 | `fg_diff()` / role modules | explicit body/remove/keep CSG |
 | `fg_cut_*` / cutter objects | overlap-aware box and cylinder cutters |
-| `fg_left()`, etc. | readable local cutter-overlap tokens |
+| `FG_LEFT()`, etc. | callable constant tokens for local cutter overlap |
 
 Documentation:
 

@@ -16,23 +16,23 @@ fg_cut_box(
     size_mm = [10, 20, 5],
     pos_mm = [5, 0, 0],
     overlap = [
-        fg_left(),
-        fg_right(),
-        fg_back()
+        FG_LEFT(),
+        FG_RIGHT(),
+        FG_BACK()
     ]
 );
 ```
 
-Box face tokens are local to the cutter:
+Box face tokens are local to the cutter. They are exposed as callable constants: technically zero-argument functions so normal OpenSCAD `use` imports them, but semantically fixed public tokens:
 
 | Token | Local face |
 | --- | --- |
-| `fg_left()` | X-min |
-| `fg_right()` | X-max |
-| `fg_front()` | Y-min |
-| `fg_back()` | Y-max |
-| `fg_bottom()` | Z-min |
-| `fg_top()` | Z-max |
+| `FG_LEFT()` | X-min |
+| `FG_RIGHT()` | X-max |
+| `FG_FRONT()` | Y-min |
+| `FG_BACK()` | Y-max |
+| `FG_BOTTOM()` | Z-min |
+| `FG_TOP()` | Z-max |
 
 Opposite faces are independent because overlap is resolved by membership, not
 by vector addition.
@@ -44,14 +44,14 @@ fg_cut_cylinder(
     diameter_mm = 5,
     height_mm = 12,
     overlap = [
-        fg_radial(),
-        fg_top()
+        FG_RADIAL(),
+        FG_TOP()
     ]
 );
 ```
 
-`fg_radial()` expands the diameter on both sides. `fg_bottom()` and
-`fg_top()` extend local Z.
+`FG_RADIAL()` expands the diameter on both sides. `FG_BOTTOM()` and
+`FG_TOP()` extend local Z.
 
 ## Object form
 

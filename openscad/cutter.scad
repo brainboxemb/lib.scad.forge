@@ -12,39 +12,39 @@ function fg_overlap_mm() =
     _FG_BOOLEAN_OVERLAP_MM;
 
 
-// Function: fg_left()
+// Function: FG_LEFT()
 // Synopsis: Returns the local X-min box face token.
-function fg_left() = "left";
+function FG_LEFT() = "left";
 
 
-// Function: fg_right()
+// Function: FG_RIGHT()
 // Synopsis: Returns the local X-max box face token.
-function fg_right() = "right";
+function FG_RIGHT() = "right";
 
 
-// Function: fg_front()
+// Function: FG_FRONT()
 // Synopsis: Returns the local Y-min box face token.
-function fg_front() = "front";
+function FG_FRONT() = "front";
 
 
-// Function: fg_back()
+// Function: FG_BACK()
 // Synopsis: Returns the local Y-max box face token.
-function fg_back() = "back";
+function FG_BACK() = "back";
 
 
-// Function: fg_bottom()
+// Function: FG_BOTTOM()
 // Synopsis: Returns the local Z-min overlap token.
-function fg_bottom() = "bottom";
+function FG_BOTTOM() = "bottom";
 
 
-// Function: fg_top()
+// Function: FG_TOP()
 // Synopsis: Returns the local Z-max overlap token.
-function fg_top() = "top";
+function FG_TOP() = "top";
 
 
-// Function: fg_radial()
+// Function: FG_RADIAL()
 // Synopsis: Returns the radial cylinder-overlap token.
-function fg_radial() = "radial";
+function FG_RADIAL() = "radial";
 
 
 // Function: fg_box_cutter_create()
@@ -54,12 +54,12 @@ function fg_box_cutter_create(
     pos_mm = [0, 0, 0],
     rot_deg = [0, 0, 0],
     overlap = [
-        fg_left(),
-        fg_right(),
-        fg_front(),
-        fg_back(),
-        fg_bottom(),
-        fg_top()
+        FG_LEFT(),
+        FG_RIGHT(),
+        FG_FRONT(),
+        FG_BACK(),
+        FG_BOTTOM(),
+        FG_TOP()
     ],
     overlap_mm = fg_overlap_mm()
 ) =
@@ -79,12 +79,12 @@ function fg_box_cutter_create(
         _fg_overlap_names_are_valid(
             overlap,
             [
-                fg_left(),
-                fg_right(),
-                fg_front(),
-                fg_back(),
-                fg_bottom(),
-                fg_top()
+                FG_LEFT(),
+                FG_RIGHT(),
+                FG_FRONT(),
+                FG_BACK(),
+                FG_BOTTOM(),
+                FG_TOP()
             ]
         ),
         "fg_box_cutter_create overlap contains an unsupported face"
@@ -111,9 +111,9 @@ function fg_cylinder_cutter_create(
     pos_mm = [0, 0, 0],
     rot_deg = [0, 0, 0],
     overlap = [
-        fg_radial(),
-        fg_bottom(),
-        fg_top()
+        FG_RADIAL(),
+        FG_BOTTOM(),
+        FG_TOP()
     ],
     overlap_mm = fg_overlap_mm()
 ) =
@@ -136,7 +136,7 @@ function fg_cylinder_cutter_create(
     assert(
         _fg_overlap_names_are_valid(
             overlap,
-            [fg_radial(), fg_bottom(), fg_top()]
+            [FG_RADIAL(), FG_BOTTOM(), FG_TOP()]
         ),
         "fg_cylinder_cutter_create overlap contains an unsupported region"
     )
@@ -177,12 +177,12 @@ module fg_cut_box(
     pos_mm = [0, 0, 0],
     rot_deg = [0, 0, 0],
     overlap = [
-        fg_left(),
-        fg_right(),
-        fg_front(),
-        fg_back(),
-        fg_bottom(),
-        fg_top()
+        FG_LEFT(),
+        FG_RIGHT(),
+        FG_FRONT(),
+        FG_BACK(),
+        FG_BOTTOM(),
+        FG_TOP()
     ],
     overlap_mm = fg_overlap_mm()
 ) {
@@ -206,9 +206,9 @@ module fg_cut_cylinder(
     pos_mm = [0, 0, 0],
     rot_deg = [0, 0, 0],
     overlap = [
-        fg_radial(),
-        fg_bottom(),
-        fg_top()
+        FG_RADIAL(),
+        FG_BOTTOM(),
+        FG_TOP()
     ],
     overlap_mm = fg_overlap_mm()
 ) {
@@ -259,37 +259,37 @@ module _fg_box_cutter_build(obj) {
     _left_mm =
         _fg_overlap_value_mm(
             obj.overlap,
-            fg_left(),
+            FG_LEFT(),
             obj.overlap_mm
         );
     _right_mm =
         _fg_overlap_value_mm(
             obj.overlap,
-            fg_right(),
+            FG_RIGHT(),
             obj.overlap_mm
         );
     _front_mm =
         _fg_overlap_value_mm(
             obj.overlap,
-            fg_front(),
+            FG_FRONT(),
             obj.overlap_mm
         );
     _back_mm =
         _fg_overlap_value_mm(
             obj.overlap,
-            fg_back(),
+            FG_BACK(),
             obj.overlap_mm
         );
     _bottom_mm =
         _fg_overlap_value_mm(
             obj.overlap,
-            fg_bottom(),
+            FG_BOTTOM(),
             obj.overlap_mm
         );
     _top_mm =
         _fg_overlap_value_mm(
             obj.overlap,
-            fg_top(),
+            FG_TOP(),
             obj.overlap_mm
         );
 
@@ -311,19 +311,19 @@ module _fg_cylinder_cutter_build(obj) {
     _radial_mm =
         _fg_overlap_value_mm(
             obj.overlap,
-            fg_radial(),
+            FG_RADIAL(),
             obj.overlap_mm
         );
     _bottom_mm =
         _fg_overlap_value_mm(
             obj.overlap,
-            fg_bottom(),
+            FG_BOTTOM(),
             obj.overlap_mm
         );
     _top_mm =
         _fg_overlap_value_mm(
             obj.overlap,
-            fg_top(),
+            FG_TOP(),
             obj.overlap_mm
         );
 

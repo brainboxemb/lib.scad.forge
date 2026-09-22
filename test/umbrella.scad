@@ -10,8 +10,8 @@ fg_diff() {
             size_mm = [4, 4, 12],
             pos_mm = [3, 3, 0],
             overlap = [
-                fg_bottom(),
-                fg_top()
+                FG_BOTTOM(),
+                FG_TOP()
             ]
         );
 }

@@ -1,5 +1,16 @@
 # Changelog
 
+## Unreleased
+
+### Changed
+
+- Rename Forge's enum-like cutter overlap token functions to callable constants:
+  `FG_LEFT()`, `FG_RIGHT()`, `FG_FRONT()`, `FG_BACK()`,
+  `FG_BOTTOM()`, `FG_TOP()` and `FG_RADIAL()`. They remain
+  zero-argument functions so OpenSCAD `use` imports them, while uppercase
+  spelling makes their fixed-token semantics explicit.
+
+
 ## v0.1.0
 
 ### Added

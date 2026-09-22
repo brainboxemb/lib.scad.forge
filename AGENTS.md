@@ -15,10 +15,15 @@ Before workflow/publication/release changes, read the pinned
 
 ## Public namespace
 
-All public APIs use the `fg_*` namespace.
+Operational public APIs use the `fg_*` namespace.
 
 Transforms form the `fg_xf_*` subfamily. Keep that grouping visible rather
 than reintroducing a separate top-level `xf_*` namespace.
+
+Fixed public token symbols are the narrow exception: use callable
+`FG_*`() constants such as `FG_LEFT()`. OpenSCAD requires the parentheses
+because normal `use` imports functions/modules but not global variables; the
+uppercase spelling communicates constant/enum semantics.
 
 Private helpers use a leading underscore.
 
