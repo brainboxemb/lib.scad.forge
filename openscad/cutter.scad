@@ -13,43 +13,36 @@ function fg_overlap_mm() =
 
 
 // Function: FG_LEFT()
-// Type: Callable constant
 // Synopsis: Returns the local X-min box face token.
 function FG_LEFT() = "left";
 
 
 // Function: FG_RIGHT()
-// Type: Callable constant
 // Synopsis: Returns the local X-max box face token.
 function FG_RIGHT() = "right";
 
 
 // Function: FG_FRONT()
-// Type: Callable constant
 // Synopsis: Returns the local Y-min box face token.
 function FG_FRONT() = "front";
 
 
 // Function: FG_BACK()
-// Type: Callable constant
 // Synopsis: Returns the local Y-max box face token.
 function FG_BACK() = "back";
 
 
 // Function: FG_BOTTOM()
-// Type: Callable constant
 // Synopsis: Returns the local Z-min overlap token.
 function FG_BOTTOM() = "bottom";
 
 
 // Function: FG_TOP()
-// Type: Callable constant
 // Synopsis: Returns the local Z-max overlap token.
 function FG_TOP() = "top";
 
 
 // Function: FG_RADIAL()
-// Type: Callable constant
 // Synopsis: Returns the radial cylinder-overlap token.
 function FG_RADIAL() = "radial";
 
