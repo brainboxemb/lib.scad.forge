@@ -1,5 +1,12 @@
 # Changelog
 
+## Unreleased
+
+### Changed
+
+- Adopt released `tool.scad-project v0.15.6` with exact tool gitlink `8ea81a0c3483770bedda75ccf80fb72797097c0a` for Migration 009, preserving Forge geometry/API while correcting production-run concurrency.
+- Requalify exact main `00c02dc7fd1878e5c815377723adf7520ef0d2ec` through production run `35729434643`; both `prod/bld` and `prod/vrf` identify the v0.15.6 stack.
+
 ## v0.2.2
 
 ### Added
