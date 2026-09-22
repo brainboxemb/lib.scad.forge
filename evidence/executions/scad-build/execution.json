@@ -1,0 +1,14 @@
+{
+  "action": "build",
+  "capability": "scad.build",
+  "domain_evidence": [],
+  "exit_code": 0,
+  "log": "execution.log",
+  "owner": "brainboxemb/tool.scad-project",
+  "owner_revision": "bfaac9f6916c09bc6525abddf64c87238fe59103",
+  "schema": "brainboxemb.execution-evidence",
+  "schema_version": 1,
+  "source_revision": "b9cdd27f9a2ec4bf46edee1d7017abb40bdd3b74",
+  "status": "success",
+  "tool_scad_project_version": "0.15.7"
+}
