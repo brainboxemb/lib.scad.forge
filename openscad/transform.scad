@@ -145,15 +145,61 @@ module fg_xf_apply(obj) {
 
 // Module: fg_xf_move()
 // Usage:
+//   fg_xf_move([10, 5])
+//       children();
 //   fg_xf_move([10, 0, 5])
 //       children();
 // Description:
-//   Moves child geometry by the supplied [X, Y, Z] vector.
+//   Moves child geometry by an ordinary XY or XYZ vector. Two-value vectors
+//   are for normal 2D XY geometry; three-value vectors are for 3D geometry.
 // Arguments:
-//   offset_mm = Translation vector in millimetres.
+//   offset_mm = [X, Y] or [X, Y, Z] translation vector in millimetres.
 module fg_xf_move(offset_mm) {
-    translate(offset_mm)
-        children();
+    assert(
+        is_list(offset_mm)
+        && (len(offset_mm) == 2 || len(offset_mm) == 3),
+        "fg_xf_move offset_mm must contain two or three values"
+    )
+        translate(offset_mm)
+            children();
+}
+
+
+// Module: fg_xf_xzmove()
+// Usage:
+//   fg_xf_xzmove([10, 5])
+//       profile_2d();
+// Description:
+//   Moves 2D child geometry whose local OpenSCAD X/Y coordinates semantically
+//   represent project X/Z. The supplied vector is [X, Z].
+// Arguments:
+//   offset_xz_mm = [X, Z] translation vector in millimetres.
+module fg_xf_xzmove(offset_xz_mm) {
+    assert(
+        is_list(offset_xz_mm) && len(offset_xz_mm) == 2,
+        "fg_xf_xzmove offset_xz_mm must contain two values"
+    )
+        translate(offset_xz_mm)
+            children();
+}
+
+
+// Module: fg_xf_yzmove()
+// Usage:
+//   fg_xf_yzmove([10, 5])
+//       profile_2d();
+// Description:
+//   Moves 2D child geometry whose local OpenSCAD X/Y coordinates semantically
+//   represent project Y/Z. The supplied vector is [Y, Z].
+// Arguments:
+//   offset_yz_mm = [Y, Z] translation vector in millimetres.
+module fg_xf_yzmove(offset_yz_mm) {
+    assert(
+        is_list(offset_yz_mm) && len(offset_yz_mm) == 2,
+        "fg_xf_yzmove offset_yz_mm must contain two values"
+    )
+        translate(offset_yz_mm)
+            children();
 }
 
 

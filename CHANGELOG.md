@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+### Added
+
+- Add `fg_xf_xzmove()` and `fg_xf_yzmove()` for readable placement of
+  2D profile geometry whose local OpenSCAD X/Y coordinates represent project
+  X/Z or Y/Z, and explicitly support two-value XY vectors in `fg_xf_move()`.
+
 ### Changed
 
 - Advance Migration 009 to released `tool.scad-project v0.15.7` with exact tool gitlink `bfaac9f6916c09bc6525abddf64c87238fe59103`, retaining production-run serialization and restoring the qualified read-only `update-repo status` contract while preserving Forge geometry/API.
