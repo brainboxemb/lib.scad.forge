@@ -1,7 +1,28 @@
 //////////////////////////////////////////////////////////////////////
 // LibFile: resolution.scad
 //   Shared Forge geometry-resolution tokens and OpenSCAD tessellation policy.
+// FileSummary: Semantic low/high/export tessellation policy and scope.
+// Includes:
+//   use <openscad/resolution.scad>
 //////////////////////////////////////////////////////////////////////
+
+
+// Section: Choosing and owning resolution
+//   Geometry resolution is output/presentation context, not design data.
+//   Changing resolution must not change nominal dimensions, fit or feature
+//   semantics.
+//   .
+//   A public build/render interface that exposes a resolution parameter owns
+//   applying that value with fg_res_apply(). Public build modules may be called
+//   directly, including with FG_RES_EXPORT(); callers cannot assume an outer
+//   entrypoint already applied the context.
+//   .
+//   Treat fg_res_apply() as a scope around the geometry it governs. Private
+//   helpers that deliberately inherit the caller's context should not invent a
+//   second independent resolution policy.
+
+
+// Section: Resolution levels
 
 
 // Function: FG_RES_LOW()
@@ -19,12 +40,20 @@ function FG_RES_HIGH() = "high";
 function FG_RES_EXPORT() = "export";
 
 
+// Section: Resolution scope
+//
 // Module: fg_res_apply()
 // Synopsis: Applies Forge's OpenSCAD tessellation policy to child geometry.
+// Usage:
+//   fg_res_apply(FG_RES_HIGH()) CHILDREN;
 // Description:
 //   Callers select semantic geometry resolution. Forge owns the matching
 //   OpenSCAD $fa/$fs settings. $fn is reset to automatic mode so a caller's
 //   global fixed segment count cannot override this policy.
+//   .
+//   Use this as a scope/context. A public build or render module that accepts a
+//   resolution parameter should apply it around the geometry owned by that
+//   interface.
 // Arguments:
 //   resolution = FG_RES_LOW(), FG_RES_HIGH() or FG_RES_EXPORT().
 module fg_res_apply(

@@ -1,7 +1,23 @@
 //////////////////////////////////////////////////////////////////////
 // LibFile: cutter.scad
 //   Overlap-aware Forge cutter specifications and geometry.
+// FileSummary: Reusable box/cylinder cutters with explicit Boolean overlap.
+// Includes:
+//   use <openscad/cutter.scad>
 //////////////////////////////////////////////////////////////////////
+
+
+// Section: Cutter and overlap semantics
+//   Forge cutter overlap is a tiny numerical CSG-robustness allowance only. It
+//   is not mechanical clearance, printer tolerance or a nominal design
+//   dimension.
+//   .
+//   Face/region tokens are local to the cutter before its placement/rotation.
+//   Use direct cutter modules for one-off cutters and cutter objects when a
+//   cutter specification is meaningful reusable data.
+
+
+// Section: Overlap constants
 
 // Function: FG_OVERLAP_MM()
 // Synopsis: Returns the fixed default Boolean robustness overlap.
@@ -49,8 +65,21 @@ function FG_TOP() = "top";
 function FG_RADIAL() = "radial";
 
 
+// Section: Cutter specifications
+//
 // Function: fg_box_cutter_create()
 // Synopsis: Creates an overlap-aware box cutter object.
+// Usage:
+//   cutter_obj = fg_box_cutter_create(size_mm=[10,20,5]);
+// Description:
+//   Creates reusable box-cutter data. Overlap expands only the named local
+//   faces by the Boolean-robustness allowance.
+// Arguments:
+//   size_mm = Local [X,Y,Z] cutter size in millimetres.
+//   pos_mm = Cutter placement in millimetres.
+//   rot_deg = Cutter Euler rotation in degrees.
+//   overlap = Local box-face tokens to extend.
+//   overlap_mm = Numerical Boolean-overlap allowance in millimetres.
 function fg_box_cutter_create(
     size_mm,
     pos_mm = [0, 0, 0],
@@ -107,6 +136,18 @@ function fg_box_cutter_create(
 
 // Function: fg_cylinder_cutter_create()
 // Synopsis: Creates an overlap-aware local-Z cylinder cutter object.
+// Usage:
+//   cutter_obj = fg_cylinder_cutter_create(diameter_mm=10, height_mm=20);
+// Description:
+//   Creates reusable cylinder-cutter data. The primitive axis is local +Z;
+//   placement/rotation is applied after local overlap expansion.
+// Arguments:
+//   diameter_mm = Nominal cutter diameter in millimetres.
+//   height_mm = Nominal local-Z cutter height in millimetres.
+//   pos_mm = Cutter placement in millimetres.
+//   rot_deg = Cutter Euler rotation in degrees.
+//   overlap = Local radial/bottom/top regions to extend.
+//   overlap_mm = Numerical Boolean-overlap allowance in millimetres.
 function fg_cylinder_cutter_create(
     diameter_mm,
     height_mm,
@@ -159,6 +200,10 @@ function fg_cylinder_cutter_create(
 
 // Module: fg_cutter_build()
 // Synopsis: Builds a Forge cutter object.
+// Usage:
+//   fg_cutter_build(cutter_obj);
+// Arguments:
+//   obj = Cutter object created by fg_box_cutter_create() or fg_cylinder_cutter_create().
 module fg_cutter_build(obj) {
     if (obj.kind == "box")
         _fg_box_cutter_build(obj);
@@ -172,8 +217,18 @@ module fg_cutter_build(obj) {
 }
 
 
+// Section: Direct cutters
+//
 // Module: fg_cut_box()
 // Synopsis: Builds an overlap-aware box cutter directly.
+// Usage:
+//   fg_cut_box(size_mm=[10,20,5]);
+// Arguments:
+//   size_mm = Local [X,Y,Z] cutter size in millimetres.
+//   pos_mm = Cutter placement in millimetres.
+//   rot_deg = Cutter Euler rotation in degrees.
+//   overlap = Local box-face tokens to extend.
+//   overlap_mm = Numerical Boolean-overlap allowance in millimetres.
 module fg_cut_box(
     size_mm,
     pos_mm = [0, 0, 0],
@@ -201,7 +256,16 @@ module fg_cut_box(
 
 
 // Module: fg_cut_cylinder()
-// Synopsis: Builds an overlap-aware cylinder cutter directly.
+// Synopsis: Builds an overlap-aware local-Z cylinder cutter directly.
+// Usage:
+//   fg_cut_cylinder(diameter_mm=10, height_mm=20);
+// Arguments:
+//   diameter_mm = Nominal cutter diameter in millimetres.
+//   height_mm = Nominal local-Z cutter height in millimetres.
+//   pos_mm = Cutter placement in millimetres.
+//   rot_deg = Cutter Euler rotation in degrees.
+//   overlap = Local radial/bottom/top regions to extend.
+//   overlap_mm = Numerical Boolean-overlap allowance in millimetres.
 module fg_cut_cylinder(
     diameter_mm,
     height_mm,

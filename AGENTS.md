@@ -57,6 +57,21 @@ Coordinate frames are orthogonal and right-handed. Keep reflections explicit.
 Do not grow Forge into a BOSL2 clone. Add helpers only when they remove repeated
 cross-project OpenSCAD bookkeeping and improve readability.
 
+## Source/API documentation
+
+Public Forge API/reference documentation lives with the owning `.scad` source
+using upstream `openscad_docsgen` structured comments. Keep the source comment
+and implementation together when a public contract or usage rule changes.
+
+The root README is the discoverable entrypoint. Generated Markdown is derived
+output under `bld/api/`; do not hand-maintain a second API manual or commit the
+generated reference to the source branch.
+
+Use the existing `tool.scad-project docs-lint` path as the syntax gate.
+`scripts/build-api-docs.sh` is only the Forge-local convenience producer for a
+browseable generated reference; the docs parser/runtime remains owned by the
+shared toolchain.
+
 ## Verification
 
 Verification must exercise the umbrella entrypoint and every direct

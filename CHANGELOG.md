@@ -2,6 +2,19 @@
 
 ## Unreleased
 
+### Added
+
+- Add `scripts/build-api-docs.sh` to generate the Forge API/reference set with
+  the `openscad-docsgen` command already provided by the shared SCAD runtime.
+
+### Changed
+
+- Make structured `.scad` comments the authority for Forge API/reference
+  documentation, including practical selection guidance for transforms,
+  coordinate frames, resolution scope, tagged CSG and cutters.
+- Make the root README the discoverable documentation entrypoint and keep the
+  former hand-written manual paths only as compatibility pointers.
+
 ## v0.3.0
 
 ### Added
