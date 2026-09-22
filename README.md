@@ -1,7 +1,7 @@
 # lib.scad.forge
 
 Lightweight object-aware OpenSCAD modeling library for readable transforms,
-tagged CSG operations and reusable cutters.
+tagged CSG operations, shared geometry resolution and reusable cutters.
 
 Forge is the shared modeling layer for the brainboxemb SCAD portfolio. It stays
 deliberately smaller than BOSL2 or Relativity.scad: no attachment framework,
@@ -34,6 +34,7 @@ fg_diff() {
 For a focused dependency, import a sub-entrypoint directly:
 
 ```openscad
+use <openscad/resolution.scad>
 use <openscad/transform.scad>
 use <openscad/csg.scad>
 use <openscad/cutter.scad>
@@ -43,6 +44,7 @@ use <openscad/cutter.scad>
 
 | Family | Purpose |
 | --- | --- |
+| `FG_RES_*()` / `fg_res_apply()` | semantic low/high/export geometry resolution and shared tessellation policy |
 | `fg_xf_*` | moves, rotations, mirrors, transform objects and coordinate frames |
 | `fg_diff()` / role modules | explicit body/remove/keep CSG |
 | `fg_cut_*` / cutter objects | overlap-aware box and cylinder cutters |
@@ -52,6 +54,7 @@ use <openscad/cutter.scad>
 Documentation:
 
 - [Forge overview](openscad/forge/manual.md)
+- [Geometry resolution](openscad/resolution/manual.md)
 - [Transforms](openscad/transform/manual.md)
 - [Tagged CSG](openscad/csg/manual.md)
 - [Cutters](openscad/cutter/manual.md)
@@ -69,12 +72,14 @@ affine/skew transforms may still use `multmatrix()`.
 ```text
 openscad/
   forge.scad
+  resolution.scad
   transform.scad
   csg.scad
   cutter.scad
 
 test/
   umbrella.scad
+  resolution.scad
   transform.scad
   csg.scad
   cutter.scad

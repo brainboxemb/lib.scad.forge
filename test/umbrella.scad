@@ -1,5 +1,6 @@
 use <../openscad/forge.scad>
 
+fg_res_apply(FG_RES_LOW())
 fg_diff() {
     fg_body()
         fg_xf_zmove(1)

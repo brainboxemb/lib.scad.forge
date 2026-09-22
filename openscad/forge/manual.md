@@ -1,8 +1,9 @@
 # Forge modeling library
 
 Forge is a lightweight object-aware modeling layer for OpenSCAD. It focuses on
-three cross-project concerns:
+four cross-project concerns:
 
+- shared semantic geometry resolution;
 - readable transforms and coordinate frames;
 - explicit tagged CSG;
 - reliable overlap-aware cutters.
@@ -22,18 +23,21 @@ use <../forge.scad>
 Focused consumers can import only what they need:
 
 ```openscad
-use <../transform.scad> // fg_xf_*
-use <../csg.scad>       // fg_diff/body/remove/keep
-use <../cutter.scad>    // fg_cut_*, cutter objects/tokens
+use <../resolution.scad> // FG_RES_*(), fg_res_apply()
+use <../transform.scad>  // fg_xf_*
+use <../csg.scad>        // fg_diff/body/remove/keep
+use <../cutter.scad>     // fg_cut_*, cutter objects/tokens
 ```
 
-The umbrella file contains the three public sub-entrypoints. Each sub-entrypoint
+The umbrella file contains the four public sub-entrypoints. Each sub-entrypoint
 is independently usable.
 
 ## Namespace
 
 ```text
+FG_RES_*() fixed geometry-resolution tokens
 fg_*       Forge modeling API
+fg_res_*   Forge resolution subfamily
 fg_xf_*    Forge transform subfamily
 fg_cut_*   direct cutter operations
 ```
