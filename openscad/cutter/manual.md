@@ -4,7 +4,7 @@
 
 ## Boolean overlap
 
-`fg_overlap_mm()` returns the default **0.001 mm** CSG robustness overlap.
+`FG_OVERLAP_MM()` returns the default **0.001 mm** CSG robustness overlap.
 This is not fit clearance, printer tolerance or a design dimension.
 
 ## Box cutters
