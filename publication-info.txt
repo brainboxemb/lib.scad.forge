@@ -1,0 +1,47 @@
+Publication context : release
+Publication kind    : verification
+Publication branch  : rel/v0.3.0/vrf
+
+Source
+------
+Repository          : brainboxemb/lib.scad.forge
+Ref type            : tag
+Ref                 : v0.3.0
+Commit              : b9cdd27f9a2ec4bf46edee1d7017abb40bdd3b74
+Triggered by        : brainboxemb
+Workflow run        : https://github.com/brainboxemb/lib.scad.forge/actions/runs/35791290434
+
+Tooling
+-------
+SCAD toolchain image: ghcr.io/brainboxemb/scad-toolchain-openscad:v0.6.1
+SCAD toolchain ver. : v0.6.1
+tool.scad-project   : v0.15.7
+
+Git submodules
+--------------
+tools/tool.git-project : 9879da589101f41b2b0e634d196ddcc51e1a6102
+tools/tool.scad-project : bfaac9f6916c09bc6525abddf64c87238fe59103
+
+Runtime components
+------------------
+SCAD toolchain
+==============
+Profile    : openscad
+Toolchain  : v0.6.1
+OpenSCAD   : OpenSCAD version 2026.09.17.nightly
+PythonSCAD : not installed
+Python     : Python 3.12.3
+Git        : git version 2.43.0
+SCons      : 4.11.1
+Inkscape   : not installed
+drawsvg    : not installed
+BOSL2      : v2.0.752
+pybosl2    : not installed
+Shapely    : not installed
+docsgen    : 2.0.55
+Pillow     : 12.3.0
+OPENSCADPATH: /opt/openscad-libraries
+BOSL2_ROOT  : /opt/openscad-libraries/BOSL2
+PYTHONPATH : /__w/lib.scad.forge/lib.scad.forge/tools/tool.scad-project/src
+Acknowledgments TXT: /usr/share/doc/scad-toolchain/OPEN_SOURCE_ACKNOWLEDGMENTS.txt
+Acknowledgments PDF: /usr/share/doc/scad-toolchain/OPEN_SOURCE_ACKNOWLEDGMENTS.pdf
