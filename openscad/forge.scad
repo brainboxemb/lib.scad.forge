@@ -3,6 +3,7 @@
 //   Umbrella entrypoint for the Forge modeling library.
 //////////////////////////////////////////////////////////////////////
 
+include <resolution.scad>
 include <transform.scad>
 include <csg.scad>
 include <cutter.scad>

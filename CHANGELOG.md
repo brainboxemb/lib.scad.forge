@@ -1,5 +1,15 @@
 # Changelog
 
+## Unreleased
+
+### Added
+
+- Add semantic `FG_RES_LOW()`, `FG_RES_HIGH()` and `FG_RES_EXPORT()` tokens
+  plus `fg_res_apply()` as Forge's shared geometry-resolution policy. Public
+  interfaces can now pass intent instead of exposing `$fn`; Forge translates
+  the level to automatic `$fn = 0` with shared `$fa` / `$fs` settings.
+
+
 ## v0.2.1
 
 ### Added

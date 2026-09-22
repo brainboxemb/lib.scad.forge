@@ -5,7 +5,8 @@ Persistent guidance for work in `lib.scad.forge`.
 ## Repository role
 
 This repository owns the portfolio's small OpenSCAD modeling language:
-readable transforms, tagged CSG and generic overlap-aware cutters.
+shared geometry resolution, readable transforms, tagged CSG and generic
+overlap-aware cutters.
 
 It must remain domain-independent. Mechanical interfaces, fit rules, hardware
 semantics and project geometry stay in their owning libraries/projects.
@@ -29,9 +30,10 @@ Private helpers use a leading underscore.
 
 ## Entry points
 
-`openscad/forge.scad` is the umbrella entrypoint and includes the three
+`openscad/forge.scad` is the umbrella entrypoint and includes the four
 public sub-entrypoints:
 
+- `resolution.scad`;
 - `transform.scad`;
 - `csg.scad`;
 - `cutter.scad`.
@@ -44,6 +46,9 @@ implementation keeps them independent and understandable.
 
 ## Modeling boundaries
 
+Forge geometry resolution is semantic (`low`, `high`, `export`) and controls
+tessellation only. Keep printer/slicer resolution outside Forge.
+
 Forge's default Boolean overlap is numerical CSG robustness only. It is not
 fit clearance, printer tolerance or a nominal design dimension.
 
@@ -55,7 +60,8 @@ cross-project OpenSCAD bookkeeping and improve readability.
 ## Verification
 
 Verification must exercise the umbrella entrypoint and every direct
-sub-entrypoint. Opposite box faces must be tested together so overlap token
-membership cannot regress into vector-cancellation behavior.
+sub-entrypoint, including all three geometry-resolution levels. Opposite box
+faces must be tested together so overlap token membership cannot regress into
+vector-cancellation behavior.
 
 Generated evidence belongs under `vrf/out/`.
