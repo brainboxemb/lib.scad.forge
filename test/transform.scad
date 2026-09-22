@@ -1,14 +1,27 @@
 use <../openscad/transform.scad>
 
-test_transform = "move"; // [move,xmove,ymove,zmove,flip,xflip,yflip,zflip,rot,xrot,yrot,zrot,object,frame,frame-object]
+test_transform = "move"; // [move,move2d,movexz,moveyz,xmove,ymove,zmove,flip,xflip,yflip,zflip,rot,xrot,yrot,zrot,object,frame,frame-object]
 
 module fixture() {
     cube([2, 3, 4]);
 }
 
+module profile_fixture() {
+    square([2, 3]);
+}
+
 if (test_transform == "move")
     fg_xf_move([5, 6, 7])
         fixture();
+else if (test_transform == "move2d")
+    fg_xf_move([5, 6])
+        profile_fixture();
+else if (test_transform == "xzmove")
+    fg_xf_xzmove([5, 7])
+        profile_fixture();
+else if (test_transform == "yzmove")
+    fg_xf_yzmove([6, 7])
+        profile_fixture();
 else if (test_transform == "xmove")
     fg_xf_xmove(5)
         fixture();

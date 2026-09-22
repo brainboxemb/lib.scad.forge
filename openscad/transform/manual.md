@@ -12,7 +12,9 @@ grouped inside the wider `fg_*` modeling API.
 
 | Intent | Prefer |
 | --- | --- |
-| Move by an XYZ vector | `fg_xf_move()` |
+| Move by a normal XY or XYZ vector | `fg_xf_move()` |
+| Move a 2D profile whose local axes represent project XZ | `fg_xf_xzmove()` |
+| Move a 2D profile whose local axes represent project YZ | `fg_xf_yzmove()` |
 | Move on one axis | `fg_xf_xmove()`, `fg_xf_ymove()`, `fg_xf_zmove()` |
 | Rotate by Euler angles | `fg_xf_rot()` |
 | Rotate on one axis | `fg_xf_xrot()`, `fg_xf_yrot()`, `fg_xf_zrot()` |
@@ -27,15 +29,14 @@ smallest helper that makes the design intent clearer.
 
 ## Simple placement
 
-Instead of:
+For normal 2D XY geometry, use a two-value move:
 
 ```openscad
-translate([10, 0, 5])
-    rotate([0, 90, 0])
-        part();
+fg_xf_move([10, 5])
+    profile_2d();
 ```
 
-write:
+For 3D geometry, use the normal three-value XYZ move:
 
 ```openscad
 fg_xf_move([10, 0, 5])
@@ -52,6 +53,42 @@ fg_xf_zmove(12)
 
 These helpers intentionally have the same transform ordering as their nested
 native OpenSCAD equivalents.
+
+## 2D profiles on remapped project planes
+
+OpenSCAD 2D geometry always uses a local X/Y coordinate pair. In CAD code that
+pair can semantically represent another project plane, such as X/Z or Y/Z.
+
+Do not hide that distinction in an unexplained two-value `translate()`.
+
+For a normal XY profile, keep the ordinary move:
+
+```openscad
+fg_xf_move([x_mm, y_mm])
+    profile_2d();
+```
+
+When local 2D X/Y represents project X/Z, write:
+
+```openscad
+fg_xf_xzmove([x_mm, z_mm])
+    profile_2d();
+```
+
+When local 2D X/Y represents project Y/Z, write:
+
+```openscad
+fg_xf_yzmove([y_mm, z_mm])
+    profile_2d();
+```
+
+The plane-aware helpers deliberately still perform a normal two-dimensional
+OpenSCAD translation. Their value is semantic: the call site tells the reader
+which project axes the two profile coordinates represent.
+
+They are intended for 2D profile geometry. Use `fg_xf_move([x, y, z])` for a
+normal 3D placement and `fg_xf_frame()` when child axes themselves must be
+remapped.
 
 ## Transform objects
 
