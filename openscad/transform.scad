@@ -1,0 +1,349 @@
+//////////////////////////////////////////////////////////////////////
+// LibFile: transform.scad
+//   Forge transform helpers for readable placement, reflection and frames.
+//
+//   Public transform APIs use the fg_xf_* subnamespace. See
+//   transform/manual.md for usage and frame semantics.
+//////////////////////////////////////////////////////////////////////
+
+
+// Function: fg_xf_create()
+// Synopsis: Creates a reusable position/rotation transform object.
+// Arguments:
+//   pos_mm = Translation vector in millimetres.
+//   rot_deg = Euler rotation vector in degrees.
+function fg_xf_create(
+    pos_mm = [0, 0, 0],
+    rot_deg = [0, 0, 0]
+) =
+    assert(is_list(pos_mm) && len(pos_mm) == 3,
+        "fg_xf_create pos_mm must contain three values")
+    assert(is_list(rot_deg) && len(rot_deg) == 3,
+        "fg_xf_create rot_deg must contain three values")
+    object(
+        kind = "pose",
+        pos_mm = pos_mm,
+        rot_deg = rot_deg
+    );
+
+
+
+// Function: fg_xf_frame_create()
+// Synopsis: Creates an orthogonal coordinate-frame transform object.
+// Description:
+//   Supply any two orthogonal destination axes. The missing third axis is
+//   derived to preserve a right-handed coordinate system. Supplying all three
+//   axes is allowed when they are mutually orthogonal and right-handed.
+// Arguments:
+//   pos_mm = Destination origin in millimetres.
+//   x_axis = Destination direction of local +X.
+//   y_axis = Destination direction of local +Y.
+//   z_axis = Destination direction of local +Z.
+function fg_xf_frame_create(
+    pos_mm = [0, 0, 0],
+    x_axis = undef,
+    y_axis = undef,
+    z_axis = undef
+) =
+    assert(is_list(pos_mm) && len(pos_mm) == 3,
+        "fg_xf_frame_create pos_mm must contain three values")
+    assert(_fg_xf_defined_axis_count(x_axis, y_axis, z_axis) >= 2,
+        "fg_xf_frame_create requires at least two axes")
+    assert(_fg_xf_axis_is_valid(x_axis),
+        "fg_xf_frame_create x_axis must be undef or a non-zero vec3")
+    assert(_fg_xf_axis_is_valid(y_axis),
+        "fg_xf_frame_create y_axis must be undef or a non-zero vec3")
+    assert(_fg_xf_axis_is_valid(z_axis),
+        "fg_xf_frame_create z_axis must be undef or a non-zero vec3")
+    let(
+        _x = is_undef(x_axis) ? undef : _fg_xf_unit(x_axis),
+        _y = is_undef(y_axis) ? undef : _fg_xf_unit(y_axis),
+        _z = is_undef(z_axis) ? undef : _fg_xf_unit(z_axis),
+        _resolved_x =
+            is_undef(_x)
+                ? _fg_xf_unit(cross(_y, _z))
+                : _x,
+        _resolved_y =
+            is_undef(_y)
+                ? _fg_xf_unit(cross(_z, _x))
+                : _y,
+        _resolved_z =
+            is_undef(_z)
+                ? _fg_xf_unit(cross(_x, _y))
+                : _z
+    )
+    assert(_fg_xf_axes_are_orthogonal(
+        _resolved_x,
+        _resolved_y,
+        _resolved_z
+    ), "fg_xf_frame_create axes must be mutually orthogonal")
+    assert(
+        _fg_xf_dot(
+            _fg_xf_unit(cross(_resolved_x, _resolved_y)),
+            _resolved_z
+        ) > 0.999999,
+        "fg_xf_frame_create axes must form a right-handed frame"
+    )
+    object(
+        kind = "frame",
+        pos_mm = pos_mm,
+        x_axis = _resolved_x,
+        y_axis = _resolved_y,
+        z_axis = _resolved_z
+    );
+
+
+// Module: fg_xf_frame()
+// Synopsis: Remaps child geometry into an orthogonal destination frame.
+module fg_xf_frame(
+    pos_mm = [0, 0, 0],
+    x_axis = undef,
+    y_axis = undef,
+    z_axis = undef
+) {
+    fg_xf_apply(
+        fg_xf_frame_create(
+            pos_mm = pos_mm,
+            x_axis = x_axis,
+            y_axis = y_axis,
+            z_axis = z_axis
+        )
+    )
+        children();
+}
+
+
+// Function: fg_xf_pos_mm()
+// Synopsis: Returns the translation vector from a transform object.
+function fg_xf_pos_mm(obj) =
+    obj.pos_mm;
+
+
+// Function: fg_xf_rot_deg()
+// Synopsis: Returns the Euler rotation vector from a transform object.
+function fg_xf_rot_deg(obj) =
+    obj.rot_deg;
+
+
+// Module: fg_xf_apply()
+// Synopsis: Applies a transform object to child geometry.
+// Arguments:
+//   obj = Pose or frame transform object created by fg_xf_create() or
+//         fg_xf_frame_create().
+module fg_xf_apply(obj) {
+    if (obj.kind == "pose")
+        translate(fg_xf_pos_mm(obj))
+            rotate(fg_xf_rot_deg(obj))
+                children();
+    else if (obj.kind == "frame")
+        multmatrix(_fg_xf_frame_matrix(obj))
+            children();
+    else
+        assert(false, str("Unsupported transform kind: ", obj.kind));
+}
+
+
+// Module: fg_xf_move()
+// Usage:
+//   fg_xf_move([10, 0, 5])
+//       children();
+// Description:
+//   Moves child geometry by the supplied [X, Y, Z] vector.
+// Arguments:
+//   offset_mm = Translation vector in millimetres.
+module fg_xf_move(offset_mm) {
+    translate(offset_mm)
+        children();
+}
+
+
+// Module: fg_xf_xmove()
+// Usage:
+//   fg_xf_xmove(10)
+//       children();
+// Description:
+//   Moves child geometry along X.
+// Arguments:
+//   distance_mm = Translation distance in millimetres.
+module fg_xf_xmove(distance_mm) {
+    translate([distance_mm, 0, 0])
+        children();
+}
+
+
+// Module: fg_xf_ymove()
+// Usage:
+//   fg_xf_ymove(10)
+//       children();
+// Description:
+//   Moves child geometry along Y.
+// Arguments:
+//   distance_mm = Translation distance in millimetres.
+module fg_xf_ymove(distance_mm) {
+    translate([0, distance_mm, 0])
+        children();
+}
+
+
+// Module: fg_xf_zmove()
+// Usage:
+//   fg_xf_zmove(10)
+//       children();
+// Description:
+//   Moves child geometry along Z.
+// Arguments:
+//   distance_mm = Translation distance in millimetres.
+module fg_xf_zmove(distance_mm) {
+    translate([0, 0, distance_mm])
+        children();
+}
+
+
+
+// Module: fg_xf_flip()
+// Synopsis: Mirrors child geometry across the plane normal to the supplied vector.
+// Arguments:
+//   normal = Mirror-plane normal vector.
+module fg_xf_flip(normal) {
+    mirror(normal)
+        children();
+}
+
+
+// Module: fg_xf_xflip()
+// Synopsis: Mirrors child geometry across the YZ plane.
+module fg_xf_xflip() {
+    fg_xf_flip([1, 0, 0])
+        children();
+}
+
+
+// Module: fg_xf_yflip()
+// Synopsis: Mirrors child geometry across the XZ plane.
+module fg_xf_yflip() {
+    fg_xf_flip([0, 1, 0])
+        children();
+}
+
+
+// Module: fg_xf_zflip()
+// Synopsis: Mirrors child geometry across the XY plane.
+module fg_xf_zflip() {
+    fg_xf_flip([0, 0, 1])
+        children();
+}
+
+
+// Module: fg_xf_rot()
+// Usage:
+//   fg_xf_rot([90, 0, 45])
+//       children();
+// Description:
+//   Rotates child geometry by the supplied [X, Y, Z] Euler-angle vector.
+// Arguments:
+//   angles_deg = Rotation angles in degrees.
+module fg_xf_rot(angles_deg) {
+    rotate(angles_deg)
+        children();
+}
+
+
+// Module: fg_xf_xrot()
+// Usage:
+//   fg_xf_xrot(90)
+//       children();
+// Description:
+//   Rotates child geometry around X.
+// Arguments:
+//   angle_deg = Rotation angle in degrees.
+module fg_xf_xrot(angle_deg) {
+    rotate([angle_deg, 0, 0])
+        children();
+}
+
+
+// Module: fg_xf_yrot()
+// Usage:
+//   fg_xf_yrot(90)
+//       children();
+// Description:
+//   Rotates child geometry around Y.
+// Arguments:
+//   angle_deg = Rotation angle in degrees.
+module fg_xf_yrot(angle_deg) {
+    rotate([0, angle_deg, 0])
+        children();
+}
+
+
+// Module: fg_xf_zrot()
+// Usage:
+//   fg_xf_zrot(90)
+//       children();
+// Description:
+//   Rotates child geometry around Z.
+// Arguments:
+//   angle_deg = Rotation angle in degrees.
+module fg_xf_zrot(angle_deg) {
+    rotate([0, 0, angle_deg])
+        children();
+}
+
+
+function _fg_xf_defined_axis_count(x_axis, y_axis, z_axis) =
+    (is_undef(x_axis) ? 0 : 1)
+    + (is_undef(y_axis) ? 0 : 1)
+    + (is_undef(z_axis) ? 0 : 1);
+
+
+function _fg_xf_axis_is_valid(axis) =
+    is_undef(axis)
+    || (
+        is_list(axis)
+        && len(axis) == 3
+        && _fg_xf_norm(axis) > 0
+    );
+
+
+function _fg_xf_dot(a, b) =
+    a[0] * b[0]
+    + a[1] * b[1]
+    + a[2] * b[2];
+
+
+function _fg_xf_norm(v) =
+    sqrt(_fg_xf_dot(v, v));
+
+
+function _fg_xf_unit(v) =
+    v / _fg_xf_norm(v);
+
+
+function _fg_xf_axes_are_orthogonal(x_axis, y_axis, z_axis) =
+    abs(_fg_xf_dot(x_axis, y_axis)) < 0.000001
+    && abs(_fg_xf_dot(x_axis, z_axis)) < 0.000001
+    && abs(_fg_xf_dot(y_axis, z_axis)) < 0.000001;
+
+
+function _fg_xf_frame_matrix(obj) =
+    [
+        [
+            obj.x_axis[0],
+            obj.y_axis[0],
+            obj.z_axis[0],
+            obj.pos_mm[0]
+        ],
+        [
+            obj.x_axis[1],
+            obj.y_axis[1],
+            obj.z_axis[1],
+            obj.pos_mm[1]
+        ],
+        [
+            obj.x_axis[2],
+            obj.y_axis[2],
+            obj.z_axis[2],
+            obj.pos_mm[2]
+        ],
+        [0, 0, 0, 1]
+    ];
