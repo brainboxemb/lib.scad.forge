@@ -47,7 +47,7 @@ Do not create one image per API symbol merely to mirror the source tree.
 The specification section
 [Why semantic resolution exists](10-specification.md#why-semantic-resolution-exists)
 and the detailed design
-[Resolution context](21-resolution-context.md)
+[Resolution context](20-01-resolution-context.md)
 are exercised by `test/resolution.scad` and the verification runner.
 
 | Verification question | Evidence |
