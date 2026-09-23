@@ -20,6 +20,11 @@
   release and migration of known consumers, the duplicate API is planned for
   removal in the following minor release.
 
+### Removed
+
+- Remove the pre-1.0 compatibility alias `fg_overlap_mm()` after its multi-release
+  compatibility window. Use the sole overlap-constant API `FG_OVERLAP_MM()`.
+
 ### Changed
 
 - Adopt the Migration-011 repository baseline: tool.scad-project v0.15.11, tool.git-project v0.2.14, managed bootstrap/update launchers, self-scoped workflow filenames and current reusable CI/release APIs.

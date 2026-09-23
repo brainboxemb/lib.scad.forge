@@ -24,11 +24,6 @@
 function FG_OVERLAP_MM() = 0.001;
 
 
-// Function: fg_overlap_mm()
-// Synopsis: Compatibility alias for FG_OVERLAP_MM().
-function fg_overlap_mm() =
-    FG_OVERLAP_MM();
-
 
 // Function: FG_LEFT()
 // Synopsis: Returns the local X-min box face token.
