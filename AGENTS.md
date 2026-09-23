@@ -1,19 +1,20 @@
 # Repository agent guidance
 
-Use the repository documents as navigation rather than reconstructing Forge
-intent from source or chat history:
+Start with the Forge-local engineering context:
 
-1. [doc/00-plan.md](doc/00-plan.md) for work context;
-2. [doc/10-specification.md](doc/10-specification.md) for why the affected
-   capability exists;
-3. [doc/20-design.md](doc/20-design.md) for library architecture;
-4. follow the relevant detailed-design link when one exists;
-5. [doc/30-verification.md](doc/30-verification.md) before changing tests or
-   evidence.
+1. read [doc/00-plan.md](doc/00-plan.md);
+2. follow its links to the relevant specification, design, detailed design,
+   verification and source/API documentation.
 
-Public API usage/deprecation documentation is source-driven in `openscad/*.scad`.
-For branch, CI, publication or release mechanics, read the pinned
-`tools/tool.scad-project/AGENTS.md`.
+For shared BrainboxEmb working conventions, read
+[brainboxemb.meta/AGENTS.md](https://github.com/brainboxemb/brainboxemb.meta/blob/main/AGENTS.md).
+That shared entrypoint owns generic Git/commit/PR/CI workflow and routes to the
+current SCAD domain conventions.
 
-Keep durable engineering facts in the owning document and do not duplicate
-them here.
+Do not inherit `AGENTS.md` from pinned tools or libraries as Forge working
+instructions. When exact dependency behavior matters, use Forge's committed
+configuration/gitlinks together with the pinned dependency's README, docs,
+source and tests.
+
+Keep only Forge-specific navigation or exceptions here. Durable Forge
+engineering knowledge belongs in the numbered local documents.

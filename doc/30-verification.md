@@ -9,7 +9,7 @@ Related documents:
 - [00-plan.md](00-plan.md) — work context;
 - [10-specification.md](10-specification.md) — why the capabilities exist;
 - [20-design.md](20-design.md) — library architecture;
-- [21-resolution-context.md](21-resolution-context.md) — resolution detailed design.
+- [20-01-resolution-context.md](20-01-resolution-context.md) — resolution detailed design.
 
 ## Verification model
 
@@ -47,7 +47,7 @@ Do not create one image per API symbol merely to mirror the source tree.
 The specification section
 [Why semantic resolution exists](10-specification.md#why-semantic-resolution-exists)
 and the detailed design
-[Resolution context](21-resolution-context.md)
+[Resolution context](20-01-resolution-context.md)
 are exercised by `test/resolution.scad` and the verification runner.
 
 | Verification question | Evidence |

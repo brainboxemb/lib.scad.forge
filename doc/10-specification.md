@@ -56,7 +56,7 @@ The important intent is:
   feature meaning.
 
 The detailed scope mechanism and concrete tessellation policy are design
-details documented in [21-resolution-context.md](21-resolution-context.md).
+details documented in [20-01-resolution-context.md](20-01-resolution-context.md).
 
 ## Why transform helpers exist
 

@@ -37,12 +37,16 @@ construct that makes the design intent clearer than native OpenSCAD.
 | Question | Authority |
 | --- | --- |
 | Work scope, sources, current focus and roadmap | this plan |
+| Shared BrainboxEmb working guidance | [`brainboxemb.meta/AGENTS.md`](https://github.com/brainboxemb/brainboxemb.meta/blob/main/AGENTS.md) |
+| Shared SCAD domain guidance | [`brainboxemb.meta/domains/scad/README.md`](https://github.com/brainboxemb/brainboxemb.meta/blob/main/domains/scad/README.md) |
 | Why Forge/capabilities exist and what they should achieve | [10-specification.md](10-specification.md) |
 | Library architecture and responsibility split | [20-design.md](20-design.md) |
-| Resolution-context implementation | [21-resolution-context.md](21-resolution-context.md) |
+| Resolution-context implementation | [20-01-resolution-context.md](20-01-resolution-context.md) |
 | Verification strategy and evidence interpretation | [30-verification.md](30-verification.md) |
 | Exact public API syntax and examples | structured comments in `openscad/*.scad` / generated `openscad_docsgen` reference |
-| Repository workflow/publication | pinned `tools/tool.scad-project/AGENTS.md` |
+| Exact Forge tooling intent and pins | `project.yml`, `project.scad.yml`, committed gitlinks and workflow callers |
+| Exact pinned SCAD tool behavior | pinned `tools/tool.scad-project/README.md`, its `docs/`, source and tests |
+| Current build/test/runtime status | live GitHub Actions plus published `prod/bld` / `prod/vrf` provenance |
 | OpenSCAD language behavior | supported OpenSCAD runtime plus upstream language documentation/issues |
 
 OpenSCAD issue

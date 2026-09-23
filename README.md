@@ -8,7 +8,6 @@ context, transforms, tagged CSG and overlap-aware cutters.
 - [Plan](doc/00-plan.md) — work method, information sources, current focus and roadmap.
 - [Specification](doc/10-specification.md) — why Forge and its functional areas exist.
 - [Design](doc/20-design.md) — library architecture and responsibility split.
-- [Resolution detailed design](doc/21-resolution-context.md) — how resolution context is implemented.
 - [Verification](doc/30-verification.md) — how intent and design are checked.
 
 Public API/reference documentation lives beside the owning `.scad` source in
