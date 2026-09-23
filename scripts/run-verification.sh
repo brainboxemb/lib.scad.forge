@@ -80,14 +80,16 @@ for view in transforms-overview coordinate-frame tagged-csg cutters-overlap reso
   test -s "$output"
 done
 
-cp "$root/vrf/verification-plan.md" "$out/verification-plan.md"
+cp "$root/doc/30-verification.md" "$out/30-verification.md"
 
 cat > "$out/README.md" <<'EOF'
 # Forge verification
 
-This snapshot contains the **human-facing evidence** for Forge verification.
-The source reasoning and evidence-selection rules are in the
-[verification plan](verification-plan.md).
+This snapshot contains human-facing Forge verification evidence.
+
+The source verification strategy is maintained in `doc/30-verification.md`.
+A copy is included here as [30-verification.md](30-verification.md) so the
+evidence snapshot remains self-contained.
 
 Machine smoke tests also run for every public entrypoint and transform/cutter
 variant. Their temporary STL/SVG files are intentionally not published.
@@ -103,8 +105,7 @@ Representative ordinary move, rotation and reflection behavior.
 ### Coordinate-frame semantics
 
 Comparison of local geometry, a simple Y-axis rotation, and an explicit
-coordinate-frame remap. A frame is used when local-axis mapping itself carries
-meaning.
+coordinate-frame remap.
 
 ![Coordinate-frame semantics](png/coordinate-frame.png)
 
@@ -132,12 +133,12 @@ Low, high and export tessellation policy shown on the same nominal cylinder.
 The verification run also checks:
 
 - exact low/high/export `$fn`, `$fa` and `$fs` policy;
+- resolution scope, restoration, nesting and compatibility-alias behavior;
 - ordinary 3D transform helpers plus object/frame forms;
 - 2D XY/XZ/YZ move helpers through SVG export;
 - tagged CSG through a real geometry render;
 - direct/object cutter forms and independent overlap-token membership;
 - the umbrella `forge.scad` entrypoint combining all API families.
 
-See [verification-plan.md](verification-plan.md) for why each item uses machine
-or visual evidence.
+See [30-verification.md](30-verification.md) for the contract/evidence mapping.
 EOF
