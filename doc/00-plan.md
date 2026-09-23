@@ -37,12 +37,20 @@ construct that makes the design intent clearer than native OpenSCAD.
 | Question | Authority |
 | --- | --- |
 | Work scope, sources, current focus and roadmap | this plan |
+| Portfolio-wide agent navigation | [`brainboxemb.meta/AGENTS.md`](https://github.com/brainboxemb/brainboxemb.meta/blob/main/AGENTS.md) |
+| Shared engineering workflow and ownership/evidence rules | [`brainboxemb.meta` engineering workflow](https://github.com/brainboxemb/brainboxemb.meta/blob/main/docs/working-model/engineering-workflow.md) |
+| Issues, branches, commits, PRs, CI, changelog and merge discipline | [`brainboxemb.meta` Git workflow](https://github.com/brainboxemb/brainboxemb.meta/blob/main/docs/working-model/git-workflow.md) |
 | Why Forge/capabilities exist and what they should achieve | [10-specification.md](10-specification.md) |
 | Library architecture and responsibility split | [20-design.md](20-design.md) |
 | Resolution-context implementation | [21-resolution-context.md](21-resolution-context.md) |
 | Verification strategy and evidence interpretation | [30-verification.md](30-verification.md) |
 | Exact public API syntax and examples | structured comments in `openscad/*.scad` / generated `openscad_docsgen` reference |
-| Repository workflow/publication | pinned `tools/tool.scad-project/AGENTS.md` |
+| Shared SCAD documentation roles | [`brainboxemb.meta` SCAD documentation structure](https://github.com/brainboxemb/brainboxemb.meta/blob/main/domains/scad/documentation-structure.md) |
+| Shared SCAD coding conventions | [`brainboxemb.meta` SCAD coding conventions](https://github.com/brainboxemb/brainboxemb.meta/blob/main/domains/scad/coding-conventions.md) |
+| Shared SCAD source/component conventions | [`brainboxemb.meta` SCAD source structure](https://github.com/brainboxemb/brainboxemb.meta/blob/main/domains/scad/source-structure.md) |
+| SCAD tooling ownership/portfolio context | [`brainboxemb.meta` SCAD tooling](https://github.com/brainboxemb/brainboxemb.meta/blob/main/domains/scad/tooling.md) |
+| Tool-specific build/verification/publication mechanics | pinned `tools/tool.scad-project/AGENTS.md` |
+| Current cross-project work, when relevant | [`brainboxemb.meta/STATUS.md`](https://github.com/brainboxemb/brainboxemb.meta/blob/main/STATUS.md) |
 | OpenSCAD language behavior | supported OpenSCAD runtime plus upstream language documentation/issues |
 
 OpenSCAD issue

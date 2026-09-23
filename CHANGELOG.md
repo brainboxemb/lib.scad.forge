@@ -22,6 +22,7 @@
 
 ### Changed
 
+- Link Forge's local plan/agent entrypoint to the shared `brainboxemb.meta` engineering, Git and SCAD guidance instead of duplicating portfolio-wide rules locally.
 - Refine Forge documentation roles: specification now explains why the library and functional areas exist, architecture stays in `20-design.md`, and resolution implementation detail moves to `21-resolution-context.md`.
 
 - Keep machine-test STL/SVG renders temporary instead of publishing one geometry

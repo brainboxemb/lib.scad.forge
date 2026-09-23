@@ -1,19 +1,19 @@
 # Repository agent guidance
 
-Use the repository documents as navigation rather than reconstructing Forge
-intent from source or chat history:
+Start locally:
 
-1. [doc/00-plan.md](doc/00-plan.md) for work context;
-2. [doc/10-specification.md](doc/10-specification.md) for why the affected
-   capability exists;
-3. [doc/20-design.md](doc/20-design.md) for library architecture;
-4. follow the relevant detailed-design link when one exists;
-5. [doc/30-verification.md](doc/30-verification.md) before changing tests or
-   evidence.
+1. read [doc/00-plan.md](doc/00-plan.md);
+2. follow its links to the relevant Forge specification, architecture,
+   detailed design, verification and API/source documentation.
 
-Public API usage/deprecation documentation is source-driven in `openscad/*.scad`.
-For branch, CI, publication or release mechanics, read the pinned
-`tools/tool.scad-project/AGENTS.md`.
+Then load the shared BrainboxEmb agent guidance from
+[brainboxemb.meta/AGENTS.md](https://github.com/brainboxemb/brainboxemb.meta/blob/main/AGENTS.md).
+That is the entrypoint for generic engineering workflow, Git/commit/PR rules and
+shared SCAD conventions.
 
-Keep durable engineering facts in the owning document and do not duplicate
-them here.
+For tool-specific build, verification, publication or release behavior, read the
+pinned `tools/tool.scad-project/AGENTS.md`.
+
+Keep only Forge-specific routing or exceptions here. Durable shared rules belong
+in `brainboxemb.meta`; durable Forge engineering knowledge belongs in the
+numbered local documents.
