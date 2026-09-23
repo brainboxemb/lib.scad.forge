@@ -8,11 +8,13 @@ tasks:
   scad.docs:
     inputs:
       - 'README.md'
+      - 'doc/**'
       - 'openscad/**/*.scad'
       - 'openscad/**/*.md'
 
   scad.verify:
     inputs:
+      - 'doc/**'
       - 'openscad/**/*.scad'
       - 'test/**'
       - 'vrf/**'

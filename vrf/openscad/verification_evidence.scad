@@ -196,7 +196,7 @@ module _vrf_cutters_overlap() {
 module _vrf_resolution_level(label, x, resolution, part_color) {
     translate([x, 0, 0]) {
         color(part_color)
-            fg_res_apply(resolution)
+            fg_res_scope(resolution)
                 cylinder(d = 20, h = 12);
 
         _vrf_label(label, [0, -14, 0]);

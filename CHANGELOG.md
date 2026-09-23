@@ -4,9 +4,10 @@
 
 ### Added
 
-- Add `vrf/verification-plan.md` as the source verification plan documenting
-  Forge verification questions, risks, proof types, evidence interpretation and
-  publication choices.
+- Add the numbered `doc/` engineering set: plan, specification, design and verification.
+- Add canonical `fg_res_scope()` for explicit child resolution-context semantics while retaining `fg_res_apply()` as a compatibility alias.
+- Add exact resolution scope/restoration/nesting verification, including one-child syntax without braces and grouped sibling syntax with braces.
+- Move the source verification strategy from `vrf/verification-plan.md` to the numbered `doc/30-verification.md`; `vrf/` now owns execution and generated evidence only.
 - Add curated PNG verification scenes for transforms, coordinate frames,
   tagged CSG, cutter-overlap semantics and resolution levels.
 - Add `scripts/build-api-docs.sh` to generate the Forge API/reference set with
