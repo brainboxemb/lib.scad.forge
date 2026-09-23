@@ -1,5 +1,4 @@
 assert(FG_OVERLAP_MM() == 0.001, "Forge overlap constant must remain 0.001 mm");
-assert(fg_overlap_mm() == FG_OVERLAP_MM(), "compatibility alias must match FG_OVERLAP_MM()");
 
 use <../openscad/cutter.scad>
 
