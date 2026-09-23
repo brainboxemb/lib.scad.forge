@@ -9,7 +9,7 @@ Related documents:
 - [00-plan.md](00-plan.md) — work context;
 - [10-specification.md](10-specification.md) — why the capabilities exist;
 - [20-design.md](20-design.md) — library architecture;
-- [21-resolution-context.md](21-resolution-context.md) — resolution detailed design.
+- [20-01-resolution-context.md](20-01-resolution-context.md) — resolution detailed design.
 
 ## Verification model
 

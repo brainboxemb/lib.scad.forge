@@ -29,7 +29,7 @@ and prevents hidden coupling between otherwise independent concerns.
 
 | Area | Responsibility | Detailed design |
 | --- | --- | --- |
-| Resolution | semantic geometry-detail context | [21-resolution-context.md](21-resolution-context.md) |
+| Resolution | semantic geometry-detail context | [20-01-resolution-context.md](20-01-resolution-context.md) |
 | Transforms | readable placement, rotation, reflection and coordinate frames | source/API remains sufficient for now |
 | Tagged CSG | explicit body/remove/keep construction roles | source/API remains sufficient for now |
 | Cutters | generic overlap-aware box/cylinder subtraction helpers | source/API remains sufficient for now |

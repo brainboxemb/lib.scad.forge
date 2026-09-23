@@ -22,7 +22,8 @@
 
 ### Changed
 
-- Refine Forge documentation roles: specification now explains why the library and functional areas exist, architecture stays in `20-design.md`, and resolution implementation detail moves to `21-resolution-context.md`.
+- Align Forge with Migration 010 agent/document guidance: route shared working rules through `brainboxemb.meta`, do not inherit dependency-owner AGENTS instructions, and use the `20-xx` detailed-design numbering family.
+- Refine Forge documentation roles: specification now explains why the library and functional areas exist, architecture stays in `20-design.md`, and resolution implementation detail lives in `20-01-resolution-context.md`.
 
 - Keep machine-test STL/SVG renders temporary instead of publishing one geometry
   artifact per test at the root of `prod/vrf`; published verification now
