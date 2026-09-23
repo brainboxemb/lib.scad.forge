@@ -3,88 +3,75 @@
 ## Purpose
 
 Forge is the small shared OpenSCAD modeling layer for the BrainboxEmb SCAD
-portfolio.
+portfolio. Its goal is to make recurring modeling intent easier to read and
+review without replacing normal OpenSCAD.
 
-It exists to make recurring modeling intent easier to read and review without
-trying to replace normal OpenSCAD. Forge is useful when a shared construct
-communicates intent more clearly than repeated low-level syntax.
-
-Current public concerns are:
-
-- semantic geometry resolution;
-- readable transforms and coordinate frames;
-- tagged constructive-solid-geometry roles;
-- reusable overlap-aware cutters.
+The fuller rationale for Forge and each functional area lives in
+[10-specification.md](10-specification.md).
 
 ## Scope
 
-Forge owns generic modeling mechanics.
-
-It does not own:
-
-- project or product geometry;
-- mechanical interfaces and fit contracts;
-- manufacturing tolerances or slicer settings;
-- domain-specific hardware meaning.
-
-Native OpenSCAD remains a valid and often preferred choice when it communicates
-the operation more directly.
+Forge owns generic modeling mechanics. Project/product geometry, mechanical
+interfaces, fit rules, manufacturing tolerances, slicer settings and
+domain-specific hardware meaning stay in their owning repositories.
 
 ## Working method
 
 For normal Forge work:
 
-1. start from this plan to understand purpose, scope and current direction;
-2. read [10-specification.md](10-specification.md) for the contracts affected by
-   the change;
-3. read [20-design.md](20-design.md) for the implementation model;
-4. read [30-verification.md](30-verification.md) before changing tests or
-   evidence;
-5. update the structured API comments beside the public `.scad` API when a
-   public call or usage rule changes;
-6. run repository verification and inspect human-facing evidence where the
-   change has a visual meaning.
+1. start here for scope, sources, current focus and roadmap;
+2. read [10-specification.md](10-specification.md) to understand why the
+   affected capability exists and what it is intended to achieve;
+3. read [20-design.md](20-design.md) for the library architecture;
+4. follow any detailed-design link for the affected functional area;
+5. read [30-verification.md](30-verification.md) before changing tests or
+   verification evidence;
+6. update the structured API comments beside the public `.scad` API when a
+   public call, usage rule or deprecation changes.
 
-Do not add a Forge helper merely to increase Forge usage. The smallest construct
-that makes the design intent obvious is preferred.
+Do not add a Forge helper merely to increase Forge usage. Prefer the smallest
+construct that makes the design intent clearer than native OpenSCAD.
 
 ## Information sources
 
 | Question | Authority |
 | --- | --- |
-| Repository purpose, scope and current direction | this plan |
-| Public/semantic behavior | [10-specification.md](10-specification.md) |
-| Internal architecture and implementation choices | [20-design.md](20-design.md) |
+| Work scope, sources, current focus and roadmap | this plan |
+| Why Forge/capabilities exist and what they should achieve | [10-specification.md](10-specification.md) |
+| Library architecture and responsibility split | [20-design.md](20-design.md) |
+| Resolution-context implementation | [21-resolution-context.md](21-resolution-context.md) |
 | Verification strategy and evidence interpretation | [30-verification.md](30-verification.md) |
-| Public API syntax and examples | structured comments in `openscad/*.scad` / generated `openscad_docsgen` reference |
+| Exact public API syntax and examples | structured comments in `openscad/*.scad` / generated `openscad_docsgen` reference |
 | Repository workflow/publication | pinned `tools/tool.scad-project/AGENTS.md` |
 | OpenSCAD language behavior | supported OpenSCAD runtime plus upstream language documentation/issues |
 
 OpenSCAD issue
 [openscad/openscad#5916](https://github.com/openscad/openscad/issues/5916)
-is relevant background for statement scoping and `let()` syntax. It is not a
-replacement for verification against the supported runtime.
+is relevant background for statement scoping and `let()` syntax. Runtime
+verification remains authoritative for Forge's supported behavior.
 
 ## Current focus
 
-The current resolution-context work has two goals:
+The current work is converging the resolution-context API on
+`fg_res_scope()` and removing the older `fg_res_apply()` name without leaving
+two permanent APIs for the same concept.
 
-- make the child-context meaning explicit at the call site with
-  `fg_res_scope()`;
-- prove the scope/restoration behavior before updating consumers.
-
-`fg_res_apply()` remains available as a compatibility alias while consumers move
-to the clearer name.
+`fg_res_apply()` is deprecated, emits a visible migration message, and exists
+only for the short pre-1.0 transition.
 
 ## Roadmap
 
 Near-term:
 
-1. qualify the resolution-context contract in Forge;
-2. release the compatible API addition;
-3. update direct consumers such as the HUB75 display-frame project;
-4. use Forge as an early canary for the shared numbered SCAD documentation
-   convention.
+1. release `fg_res_scope()` as the canonical API while `fg_res_apply()` is
+   deprecated;
+2. migrate known BrainboxEmb consumers;
+3. remove `fg_res_apply()` in the following pre-1.0 minor release;
+4. continue using Forge as an early canary for the shared SCAD documentation
+   structure.
 
-Broader portfolio rollout belongs to the coordination work tracked in
-`brainboxemb.meta`; it is not owned by this library.
+Current intended cadence is deprecation in v0.4.0 and removal in v0.5.0. If
+release numbering changes before publication, preserve the policy of one
+compatibility release followed by removal.
+
+Broader documentation/template rollout belongs to `brainboxemb.meta`.

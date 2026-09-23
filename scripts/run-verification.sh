@@ -27,9 +27,23 @@ render_machine() {
   test -s "$output"
 }
 
-render_machine \
-  "$machine_out/resolution.stl" \
-  "$root/test/resolution.scad"
+resolution_log="$machine_out/resolution.log"
+set +e
+openscad \
+  --enable=object-function \
+  --render \
+  -o "$machine_out/resolution.stl" \
+  "$root/test/resolution.scad" \
+  >"$resolution_log" 2>&1
+resolution_status=$?
+set -e
+
+cat "$resolution_log"
+test "$resolution_status" -eq 0
+test -s "$machine_out/resolution.stl"
+grep -F \
+  "DEPRECATED: fg_res_apply() is deprecated; use fg_res_scope() instead." \
+  "$resolution_log"
 
 transform_source="$root/test/transform.scad"
 for transform in move xmove ymove zmove flip xflip yflip zflip rot xrot yrot zrot object frame frame-object; do
@@ -140,5 +154,5 @@ The verification run also checks:
 - direct/object cutter forms and independent overlap-token membership;
 - the umbrella `forge.scad` entrypoint combining all API families.
 
-See [30-verification.md](30-verification.md) for the contract/evidence mapping.
+See [30-verification.md](30-verification.md) for the intent/design/evidence mapping.
 EOF
