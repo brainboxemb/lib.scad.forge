@@ -1,0 +1,299 @@
+[ WARN 2026-09-23 17:40:04.920] moon_app::queries::changed_files  Detected a shallow checkout, unable to run Git commands to determine changed files. 
+[ WARN 17:40:04.920] moon_app::queries::changed_files  A full Git history is required for affected checks, falling back to an empty files list. 
+[ WARN 17:40:05.001] moon_task_hasher::task_hasher  Attempted to hash input update-repo.ps1 but it does not exist, skipping 
+[ WARN 17:40:05.001] moon_task_hasher::task_hasher  Attempted to hash input update-repo.sh but it does not exist, skipping 
+▮▮▮▮ consumer:scad.verify (e2d09244)
++ openscad-docsgen -m -T /work/openscad/csg.scad
+Parsing...
+  /work/openscad/csg.scad
+No log requests to process
++ openscad-docsgen -m -T /work/openscad/cutter.scad
+Parsing...
+  /work/openscad/cutter.scad
+No log requests to process
++ openscad-docsgen -m -T /work/openscad/resolution.scad
+Parsing...
+  /work/openscad/resolution.scad
+No log requests to process
++ openscad-docsgen -m -T /work/openscad/transform.scad
+Parsing...
+  /work/openscad/transform.scad
+No log requests to process
++ bash scripts/run-verification.sh
+ECHO: "DEPRECATED: fg_res_apply() is deprecated; use fg_res_scope() instead."
+Geometries in cache: 13
+Geometry cache size in bytes: 34816
+CGAL Polyhedrons in cache: 2
+CGAL cache size in bytes: 113750
+Total rendering time: 0:00:00.008
+   Top level object is a 3D object (manifold):
+   Status:     NoError
+   Genus:      -8
+   Vertices:      325
+   Facets:        614
+ECHO: "DEPRECATED: fg_res_apply() is deprecated; use fg_res_scope() instead."
+Geometries in cache: 2
+Geometry cache size in bytes: 1712
+CGAL Polyhedrons in cache: 0
+CGAL cache size in bytes: 0
+Total rendering time: 0:00:00.000
+Top level object is a 3D object (PolySet):
+   Convex:       yes
+   Facets:         6
+Geometries in cache: 2
+Geometry cache size in bytes: 1712
+CGAL Polyhedrons in cache: 0
+CGAL cache size in bytes: 0
+Total rendering time: 0:00:00.000
+Top level object is a 3D object (PolySet):
+   Convex:       yes
+   Facets:         6
+Geometries in cache: 2
+Geometry cache size in bytes: 1712
+CGAL Polyhedrons in cache: 0
+CGAL cache size in bytes: 0
+Total rendering time: 0:00:00.000
+Top level object is a 3D object (PolySet):
+   Convex:       yes
+   Facets:         6
+Geometries in cache: 2
+Geometry cache size in bytes: 1712
+CGAL Polyhedrons in cache: 0
+CGAL cache size in bytes: 0
+Total rendering time: 0:00:00.000
+Top level object is a 3D object (PolySet):
+   Convex:       yes
+   Facets:         6
+Geometries in cache: 2
+Geometry cache size in bytes: 1712
+CGAL Polyhedrons in cache: 0
+CGAL cache size in bytes: 0
+Total rendering time: 0:00:00.000
+Top level object is a 3D object (PolySet):
+   Convex:       yes
+   Facets:         6
+Geometries in cache: 2
+Geometry cache size in bytes: 1712
+CGAL Polyhedrons in cache: 0
+CGAL cache size in bytes: 0
+Total rendering time: 0:00:00.000
+Top level object is a 3D object (PolySet):
+   Convex:       yes
+   Facets:         6
+Geometries in cache: 2
+Geometry cache size in bytes: 1712
+CGAL Polyhedrons in cache: 0
+CGAL cache size in bytes: 0
+Total rendering time: 0:00:00.000
+Top level object is a 3D object (PolySet):
+   Convex:       yes
+   Facets:         6
+Geometries in cache: 2
+Geometry cache size in bytes: 1712
+CGAL Polyhedrons in cache: 0
+CGAL cache size in bytes: 0
+Total rendering time: 0:00:00.000
+Top level object is a 3D object (PolySet):
+   Convex:       yes
+   Facets:         6
+Geometries in cache: 2
+Geometry cache size in bytes: 1712
+CGAL Polyhedrons in cache: 0
+CGAL cache size in bytes: 0
+Total rendering time: 0:00:00.000
+Top level object is a 3D object (PolySet):
+   Convex:       yes
+   Facets:         6
+Geometries in cache: 2
+Geometry cache size in bytes: 1712
+CGAL Polyhedrons in cache: 0
+CGAL cache size in bytes: 0
+Total rendering time: 0:00:00.000
+Top level object is a 3D object (PolySet):
+   Convex:       yes
+   Facets:         6
+Geometries in cache: 2
+Geometry cache size in bytes: 1712
+CGAL Polyhedrons in cache: 0
+CGAL cache size in bytes: 0
+Total rendering time: 0:00:00.000
+Top level object is a 3D object (PolySet):
+   Convex:       yes
+   Facets:         6
+Geometries in cache: 2
+Geometry cache size in bytes: 1712
+CGAL Polyhedrons in cache: 0
+CGAL cache size in bytes: 0
+Total rendering time: 0:00:00.000
+Top level object is a 3D object (PolySet):
+   Convex:       yes
+   Facets:         6
+Geometries in cache: 3
+Geometry cache size in bytes: 2568
+CGAL Polyhedrons in cache: 0
+CGAL cache size in bytes: 0
+Total rendering time: 0:00:00.000
+Top level object is a 3D object (PolySet):
+   Convex:       yes
+   Facets:         6
+Geometries in cache: 2
+Geometry cache size in bytes: 1712
+CGAL Polyhedrons in cache: 0
+CGAL cache size in bytes: 0
+Total rendering time: 0:00:00.000
+Top level object is a 3D object (PolySet):
+   Convex:       yes
+   Facets:         6
+Geometries in cache: 2
+Geometry cache size in bytes: 1712
+CGAL Polyhedrons in cache: 0
+CGAL cache size in bytes: 0
+Total rendering time: 0:00:00.000
+Top level object is a 3D object (PolySet):
+   Convex:       yes
+   Facets:         6
+Geometries in cache: 2
+Geometry cache size in bytes: 288
+CGAL Polyhedrons in cache: 0
+CGAL cache size in bytes: 0
+Total rendering time: 0:00:00.000
+Top level object is a 2D object:
+   Contours:        1
+Geometries in cache: 2
+Geometry cache size in bytes: 288
+CGAL Polyhedrons in cache: 0
+CGAL cache size in bytes: 0
+Total rendering time: 0:00:00.000
+Top level object is a 2D object:
+   Contours:        1
+Geometries in cache: 2
+Geometry cache size in bytes: 288
+CGAL Polyhedrons in cache: 0
+CGAL cache size in bytes: 0
+Total rendering time: 0:00:00.000
+Top level object is a 2D object:
+   Contours:        1
+Geometries in cache: 5
+Geometry cache size in bytes: 4280
+CGAL Polyhedrons in cache: 2
+CGAL cache size in bytes: 10000
+Total rendering time: 0:00:00.003
+   Top level object is a 3D object (manifold):
+   Status:     NoError
+   Genus:      0
+   Vertices:       24
+   Facets:         44
+Geometries in cache: 4
+Geometry cache size in bytes: 3424
+CGAL Polyhedrons in cache: 0
+CGAL cache size in bytes: 0
+Total rendering time: 0:00:00.000
+Top level object is a 3D object (PolySet):
+   Convex:       yes
+   Facets:         6
+Geometries in cache: 4
+Geometry cache size in bytes: 3424
+CGAL Polyhedrons in cache: 0
+CGAL cache size in bytes: 0
+Total rendering time: 0:00:00.000
+Top level object is a 3D object (PolySet):
+   Convex:       yes
+   Facets:         6
+Geometries in cache: 4
+Geometry cache size in bytes: 3424
+CGAL Polyhedrons in cache: 0
+CGAL cache size in bytes: 0
+Total rendering time: 0:00:00.000
+Top level object is a 3D object (PolySet):
+   Convex:       yes
+   Facets:         6
+Geometries in cache: 4
+Geometry cache size in bytes: 6112
+CGAL Polyhedrons in cache: 0
+CGAL cache size in bytes: 0
+Total rendering time: 0:00:00.000
+Top level object is a 3D object (PolySet):
+   Convex:       yes
+   Facets:        10
+Geometries in cache: 4
+Geometry cache size in bytes: 6112
+CGAL Polyhedrons in cache: 0
+CGAL cache size in bytes: 0
+Total rendering time: 0:00:00.000
+Top level object is a 3D object (PolySet):
+   Convex:       yes
+   Facets:        10
+Geometries in cache: 4
+Geometry cache size in bytes: 6112
+CGAL Polyhedrons in cache: 0
+CGAL cache size in bytes: 0
+Total rendering time: 0:00:00.000
+Top level object is a 3D object (PolySet):
+   Convex:       yes
+   Facets:        10
+Geometries in cache: 7
+Geometry cache size in bytes: 5136
+CGAL Polyhedrons in cache: 2
+CGAL cache size in bytes: 8000
+Total rendering time: 0:00:00.003
+   Top level object is a 3D object (manifold):
+   Status:     NoError
+   Genus:      1
+   Vertices:       16
+   Facets:         32
+Geometries in cache: 26
+Geometry cache size in bytes: 268592
+CGAL Polyhedrons in cache: 14
+CGAL cache size in bytes: 570000
+Total rendering time: 0:00:00.406
+   Top level object is a 3D object (manifold):
+   Status:     NoError
+   Genus:      -17
+   Vertices:     1038
+   Facets:       2004
+Geometries in cache: 22
+Geometry cache size in bytes: 382968
+CGAL Polyhedrons in cache: 13
+CGAL cache size in bytes: 754000
+Total rendering time: 0:00:00.212
+   Top level object is a 3D object (manifold):
+   Status:     NoError
+   Genus:      -15
+   Vertices:     1376
+   Facets:       2688
+Geometries in cache: 25
+Geometry cache size in bytes: 375480
+CGAL Polyhedrons in cache: 10
+CGAL cache size in bytes: 1115000
+Total rendering time: 0:00:00.166
+   Top level object is a 3D object (manifold):
+   Status:     NoError
+   Genus:      -13
+   Vertices:     1284
+   Facets:       2512
+Geometries in cache: 30
+Geometry cache size in bytes: 675568
+CGAL Polyhedrons in cache: 5
+CGAL cache size in bytes: 1134000
+Total rendering time: 0:00:00.173
+   Top level object is a 3D object (manifold):
+   Status:     NoError
+   Genus:      -27
+   Vertices:     2268
+   Facets:       4424
+Geometries in cache: 18
+Geometry cache size in bytes: 279976
+CGAL Polyhedrons in cache: 4
+CGAL cache size in bytes: 560000
+Total rendering time: 0:00:00.164
+   Top level object is a 3D object (manifold):
+   Status:     NoError
+   Genus:      -11
+   Vertices:     1120
+   Facets:       2192
+verify: OK
+▮▮▮▮ consumer:scad.verify (4s 306ms, e2d09244)
+
+Tasks: 1 completed
+ Time: 4s 368ms
+
