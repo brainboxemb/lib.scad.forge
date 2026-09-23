@@ -4,11 +4,20 @@
 
 ### Added
 
+- Add `vrf/verification-plan.md` as the source verification plan documenting
+  Forge verification questions, risks, proof types, evidence interpretation and
+  publication choices.
+- Add curated PNG verification scenes for transforms, coordinate frames,
+  tagged CSG, cutter-overlap semantics and resolution levels.
 - Add `scripts/build-api-docs.sh` to generate the Forge API/reference set with
   the `openscad-docsgen` command already provided by the shared SCAD runtime.
 
 ### Changed
 
+- Keep machine-test STL/SVG renders temporary instead of publishing one geometry
+  artifact per test at the root of `prod/vrf`; published verification now
+  focuses on a human-readable README, plan and PNG evidence.
+- Expand transform verification to include the 2D XY/XZ/YZ move helpers.
 - Make structured `.scad` comments the authority for Forge API/reference
   documentation, including practical selection guidance for transforms,
   coordinate frames, resolution scope, tagged CSG and cutters.
