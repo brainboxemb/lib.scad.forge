@@ -7,6 +7,39 @@ Forge is the shared modeling layer for the brainboxemb SCAD portfolio. It stays
 deliberately smaller than BOSL2 or Relativity.scad: no attachment framework,
 selector language or replacement primitive system.
 
+## Documentation
+
+Forge API/reference documentation is **source-driven**. The structured comments
+next to the public functions and modules are the authority and use the upstream
+`openscad_docsgen` format, similar to BOSL2.
+
+Start from the source family that owns the question:
+
+- [Transforms](openscad/transform.scad) — placement, rotations, reflections and coordinate frames;
+- [Geometry resolution](openscad/resolution.scad) — low/high/export policy and resolution scope;
+- [Tagged CSG](openscad/csg.scad) — body/remove/keep construction roles;
+- [Cutters](openscad/cutter.scad) — overlap-aware box and cylinder cutters;
+- [Umbrella entrypoint](openscad/forge.scad) — complete Forge import.
+
+The shared SCAD runtime already provides `openscad-docsgen`. Forge's normal
+`scad-project docs-lint` / verification path validates the structured source
+comments through that upstream parser.
+
+To generate a browseable local Markdown reference, run this inside the shared
+SCAD runtime:
+
+```bash
+./scripts/build-api-docs.sh
+```
+
+Generated documentation is written below `bld/api/` and is intentionally not
+committed to the source branch. The generated set includes the per-file
+reference plus table of contents, function/module index, topics index and cheat
+sheet.
+
+The older `openscad/*/manual.md` paths are retained only as compatibility
+pointers; they are no longer independent documentation authorities.
+
 ## Quick start
 
 For normal use, import the umbrella entrypoint:
@@ -51,14 +84,6 @@ use <openscad/cutter.scad>
 | `FG_LEFT()`, etc. | callable constant tokens for local cutter overlap |
 | `FG_OVERLAP_MM()` | fixed 0.001 mm Boolean robustness allowance |
 
-Documentation:
-
-- [Forge overview](openscad/forge/manual.md)
-- [Geometry resolution](openscad/resolution/manual.md)
-- [Transforms](openscad/transform/manual.md)
-- [Tagged CSG](openscad/csg/manual.md)
-- [Cutters](openscad/cutter/manual.md)
-
 ## Scope
 
 Forge owns generic modeling mechanics. It does **not** own mechanical
@@ -76,6 +101,9 @@ openscad/
   transform.scad
   csg.scad
   cutter.scad
+
+scripts/
+  build-api-docs.sh
 
 test/
   umbrella.scad

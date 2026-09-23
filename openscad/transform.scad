@@ -1,10 +1,37 @@
 //////////////////////////////////////////////////////////////////////
 // LibFile: transform.scad
-//   Forge transform helpers for readable placement, reflection and frames.
-//
-//   Public transform APIs use the fg_xf_* subnamespace. See
-//   transform/manual.md for usage and frame semantics.
+//   Readable placement, reflection, rotation and coordinate-frame helpers.
+//   .
+//   Forge does not try to replace every native OpenSCAD transform. Prefer the
+//   smallest operation that makes the CAD intent obvious at the call site.
+// FileSummary: Readable moves, rotations, reflections and coordinate frames.
+// Includes:
+//   use <openscad/transform.scad>
 //////////////////////////////////////////////////////////////////////
+
+
+// Section: Choosing a transform
+//   Use fg_xf_move() for ordinary XY/XYZ placement and the axis-specific move
+//   helpers when only one project axis changes.
+//   .
+//   Use fg_xf_xzmove() or fg_xf_yzmove() when OpenSCAD 2D local X/Y
+//   semantically represents a different project plane. Their value is making
+//   that project-axis meaning visible at the call site.
+//   .
+//   Use the axis-specific rotation helpers for simple rotations. Use
+//   fg_xf_frame() only when the mapping of local axes into project axes is
+//   itself meaningful model information. A frame is not a more elaborate
+//   spelling for an otherwise ordinary rotation.
+//   .
+//   Keep native multmatrix() for genuine general affine/skew transforms, and
+//   keep native transforms when they communicate a local construction more
+//   directly than a Forge wrapper.
+
+
+// Section: Transform objects
+//   Create a transform object only when placement/orientation is meaningful
+//   reusable data. For a one-off obvious move or rotation, direct helpers are
+//   normally easier to read.
 
 
 // Function: fg_xf_create()
@@ -28,12 +55,20 @@ function fg_xf_create(
 
 
 
+// Section: Coordinate frames
+//   Coordinate frames describe where the local axes of child geometry point.
+//   Use them when that axis relationship is the design intent. If the operation
+//   is simply "rotate this part 90 degrees around Y", prefer fg_xf_yrot().
+//
 // Function: fg_xf_frame_create()
 // Synopsis: Creates an orthogonal coordinate-frame transform object.
 // Description:
 //   Supply any two orthogonal destination axes. The missing third axis is
 //   derived to preserve a right-handed coordinate system. Supplying all three
 //   axes is allowed when they are mutually orthogonal and right-handed.
+//   .
+//   Use a frame when local-axis remapping itself matters to the reader; do not
+//   use it merely because an ordinary rotation can also be described by axes.
 // Arguments:
 //   pos_mm = Destination origin in millimetres.
 //   x_axis = Destination direction of local +X.
@@ -95,6 +130,16 @@ function fg_xf_frame_create(
 
 // Module: fg_xf_frame()
 // Synopsis: Remaps child geometry into an orthogonal destination frame.
+// Usage:
+//   fg_xf_frame(x_axis=[0,1,0], y_axis=[0,0,1]) CHILDREN;
+// Description:
+//   Remaps local coordinate axes into explicit project directions. Prefer a
+//   simple axis rotation when no semantic axis remap needs to be communicated.
+// Arguments:
+//   pos_mm = Destination origin in millimetres.
+//   x_axis = Destination direction of local +X, or undef.
+//   y_axis = Destination direction of local +Y, or undef.
+//   z_axis = Destination direction of local +Z, or undef.
 module fg_xf_frame(
     pos_mm = [0, 0, 0],
     x_axis = undef,
@@ -143,6 +188,11 @@ module fg_xf_apply(obj) {
 }
 
 
+// Section: Placement
+//   Placement helpers preserve ordinary OpenSCAD transform ordering. The
+//   plane-aware 2D helpers label project-plane semantics; they do not perform a
+//   hidden 3D transform.
+//
 // Module: fg_xf_move()
 // Usage:
 //   fg_xf_move([10, 5])
@@ -246,6 +296,10 @@ module fg_xf_zmove(distance_mm) {
 
 
 
+// Section: Reflections
+//   Reflections are explicit because they change handedness. Coordinate frames
+//   remain right-handed; combine a frame with a flip when both are required.
+//
 // Module: fg_xf_flip()
 // Synopsis: Mirrors child geometry across the plane normal to the supplied vector.
 // Arguments:
@@ -280,6 +334,11 @@ module fg_xf_zflip() {
 }
 
 
+// Section: Rotations
+//   Prefer the axis-specific helper for a simple one-axis rotation. For
+//   example, an OpenSCAD cylinder runs along local +Z; mapping that cylinder to
+//   project +X is simply fg_xf_yrot(90), not a coordinate-frame problem.
+//
 // Module: fg_xf_rot()
 // Usage:
 //   fg_xf_rot([90, 0, 45])
