@@ -5,11 +5,11 @@ context, transforms, tagged CSG and overlap-aware cutters.
 
 ## Start here
 
-- [Plan](doc/00-plan.md) — purpose, scope, working method, information sources
-  and current direction.
-- [Specification](doc/10-specification.md) — public and semantic contracts.
-- [Design](doc/20-design.md) — how those contracts are implemented.
-- [Verification](doc/30-verification.md) — how the contracts are proven.
+- [Plan](doc/00-plan.md) — work method, information sources, current focus and roadmap.
+- [Specification](doc/10-specification.md) — why Forge and its functional areas exist.
+- [Design](doc/20-design.md) — library architecture and responsibility split.
+- [Resolution detailed design](doc/21-resolution-context.md) — how resolution context is implemented.
+- [Verification](doc/30-verification.md) — how intent and design are checked.
 
 Public API/reference documentation lives beside the owning `.scad` source in
 `openscad/` using the `openscad_docsgen` format. Generate the local reference
@@ -26,5 +26,4 @@ use <openscad/forge.scad>
 ```
 
 Generated API documentation belongs under `bld/api/`. Generated verification
-evidence belongs under `vrf/out/` and is published through the normal
-verification branch.
+evidence belongs under `vrf/out/`.

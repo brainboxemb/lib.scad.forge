@@ -1,154 +1,113 @@
 # Forge specification
 
-This document defines the externally meaningful contracts of Forge. For purpose,
-scope and working method, start with [00-plan.md](00-plan.md).
+This document explains **why Forge exists**, what it is trying to improve, and
+why its main functional areas belong in the library.
 
-## General modeling contract
+For current work sequencing and information sources, start with
+[00-plan.md](00-plan.md).
 
-### FORGE-GEN-01 — generic modeling layer
+## Why Forge exists
 
-Forge provides domain-independent modeling mechanics. Project geometry,
-mechanical interfaces, fit rules and manufacturing settings remain outside this
-library.
+OpenSCAD is intentionally small and expressive, but a portfolio of projects
+quickly accumulates repeated low-level patterns whose intent is clearer than
+their syntax.
 
-### FORGE-GEN-02 — readability over wrapper count
+Forge exists to give those recurring patterns a small shared vocabulary when
+that vocabulary makes models easier to understand and review.
 
-Using Forge is not a goal by itself. A native OpenSCAD operation remains correct
-when it communicates the design intent more directly.
+The goal is not to hide OpenSCAD. The goal is that a reader can more often see
+**what the model means** instead of reconstructing the intent from repeated
+`translate()`, `rotate()`, Boolean bookkeeping or tessellation settings.
 
-### FORGE-API-01 — public namespace
+## What Forge tries to achieve
 
-Operational public APIs use the `fg_*` namespace. Transform operations use the
-`fg_xf_*` subfamily.
+Forge should:
 
-Fixed public token values that must survive normal OpenSCAD `use` use callable
-`FG_*()` constants.
+- make common modeling intent readable at the call site;
+- give repeated cross-project behavior one consistent meaning;
+- keep domain-specific geometry and mechanical decisions out of the generic
+  modeling layer;
+- remain small enough that native OpenSCAD is still obvious and normal;
+- prefer one clear API for one concept instead of accumulating equivalent
+  aliases.
 
-### FORGE-API-02 — independent sub-entrypoints
+Forge should not become a general replacement geometry framework or a BOSL2
+clone.
 
-`resolution.scad`, `transform.scad`, `csg.scad` and `cutter.scad` remain
-independently usable. `forge.scad` is the umbrella entrypoint.
+## Why semantic resolution exists
 
-## Geometry resolution
+Projects need different geometry detail while designing, reviewing and
+exporting. Passing raw `$fn`, `$fa` and `$fs` choices through every public
+build API exposes implementation detail and encourages each project to invent
+its own policy.
 
-Resolution is output/presentation context. It controls tessellation only and
-must not change nominal dimensions, fit, clearance or feature semantics.
+Forge therefore treats resolution as **semantic output context**: callers say
+whether they need low, high or export quality and the library owns the
+tessellation policy behind those meanings.
 
-### RES-LEVEL-01 — semantic levels
+The important intent is:
 
-| Token | Meaning |
-| --- | --- |
-| `FG_RES_LOW()` | fast interactive geometry |
-| `FG_RES_HIGH()` | normal design/render/verification geometry |
-| `FG_RES_EXPORT()` | production mesh geometry |
+- a public build that offers a resolution choice owns that context for the
+  geometry it builds;
+- private geometry normally inherits that context rather than inventing
+  another policy;
+- the context is local to the child geometry and must not leak outward;
+- changing resolution changes tessellation, not nominal dimensions, fit or
+  feature meaning.
 
-### RES-POLICY-01 — exact tessellation policy
+The detailed scope mechanism and concrete tessellation policy are design
+details documented in [21-resolution-context.md](21-resolution-context.md).
 
-Within a Forge resolution context:
+## Why transform helpers exist
 
-| Level | `$fn` | `$fa` | `$fs` |
-| --- | ---: | ---: | ---: |
-| low | `0` | `12` | `2` |
-| high | `0` | `6` | `1` |
-| export | `0` | `3` | `0.5` |
+Simple placement is already easy in OpenSCAD and should stay simple.
 
-`$fn = 0` is part of the contract so a caller's fixed global segment count does
-not override the semantic Forge policy.
+Forge transform helpers exist where a named operation makes repeated intent
+more obvious: axis-specific movement/rotation, explicit reflection, reusable
+transform objects and meaningful coordinate-frame remapping.
 
-### RES-CTX-01 — public owner applies context
+A coordinate frame has a different purpose from a simple rotation. It is useful
+when the mapping from local axes to project axes is itself part of the model's
+meaning; it should not be used merely because it can express a rotation.
 
-A public build/render interface that exposes a `resolution` parameter owns
-establishing that resolution context around all geometry owned by the
-interface.
+## Why tagged CSG exists
 
-A caller must not need to know whether an outer entrypoint already established
-the context.
+Large nested Boolean expressions can hide the construction roles of their
+children.
 
-### RES-CTX-02 — private helpers inherit by default
+Tagged CSG exists for constructions where `body`, `remove` and `keep` are
+meaningful engineering roles. It lets the source communicate those roles
+directly.
 
-A private geometry helper normally inherits the active caller context. It does
-not establish a second resolution policy unless it intentionally creates a
-nested context.
+It is not intended to replace every native `difference()` or `union()`.
 
-### RES-CTX-03 — child-only effect
+## Why reusable cutters exist
 
-A Forge resolution context changes `$fn`, `$fa` and `$fs` for its child geometry
-only.
+Robust Boolean subtraction often needs a tiny intentional overlap so nominally
+coincident faces do not create fragile CSG results.
 
-After the child completes, the caller's previous special-variable values are
-restored.
+That overlap pattern is easy to repeat inconsistently and easy to confuse with
+mechanical clearance or print tolerance.
 
-### RES-CTX-04 — nested restoration
+Forge cutters exist to give generic box/cylinder cutters one consistent local
+overlap vocabulary. The overlap remains a numerical CSG aid only; mechanical
+fit belongs elsewhere.
 
-A nested Forge resolution context may temporarily override an outer Forge
-resolution context. When the nested child completes, the outer context is
-restored for subsequent sibling geometry.
+## What Forge deliberately does not own
 
-### RES-CTX-05 — braces are grouping, not resolution syntax
+Forge does not define:
 
-The canonical context call is:
+- product or project dimensions;
+- mechanical interfaces and mating clearances;
+- printer/slicer resolution or manufacturing tolerances;
+- domain-specific hardware semantics;
+- a requirement to wrap native OpenSCAD when native syntax is already clearer.
 
-```scad
-fg_res_scope(resolution)
-    child_geometry();
-```
+## Pre-1.0 API evolution
 
-No braces are required for one child statement.
+Forge is still being shaped before 1.0. During this phase, clearer naming and
+simpler concepts are preferred over preserving duplicate APIs indefinitely.
 
-Braces are ordinary OpenSCAD grouping when multiple sibling child statements
-must share the same context:
-
-```scad
-fg_res_scope(resolution) {
-    first_geometry();
-    second_geometry();
-}
-```
-
-The braces do not activate or strengthen Forge resolution behavior.
-
-### RES-CTX-06 — canonical API name
-
-`fg_res_scope()` is the canonical public API for establishing the child
-resolution context.
-
-`fg_res_apply()` is a compatibility alias with identical behavior. Existing
-consumers remain valid; new code should prefer `fg_res_scope()`.
-
-### RES-CTX-07 — tessellation only
-
-Changing the Forge resolution level may change mesh tessellation, render cost
-and visible faceting. It must not alter the nominal modeled geometry or any
-mechanical/design parameter.
-
-## Transform semantics
-
-### XF-01 — smallest meaningful transform
-
-Use the smallest transform construct that communicates placement/orientation
-intent.
-
-Simple one-axis rotations use the axis-specific rotation helpers. A coordinate
-frame is reserved for cases where mapping of local axes into project axes is
-itself meaningful model information.
-
-### XF-02 — right-handed coordinate frames
-
-Forge coordinate frames are orthogonal and right-handed. Reflections remain
-explicit operations.
-
-## Tagged CSG
-
-### CSG-01 — semantic construction roles
-
-`fg_diff()` is for construction where body/remove/keep are meaningful roles. It
-is not a requirement to replace every native `difference()`.
-
-## Cutter overlap
-
-### CUT-01 — numerical robustness only
-
-Forge cutter overlap is a numerical Boolean-robustness allowance. It is not
-mechanical clearance, print tolerance or nominal geometry.
-
-The default overlap is `FG_OVERLAP_MM() == 0.001`.
+When an API is replaced, controlled consumers should receive a visible
+deprecation path, migrate promptly, and allow the obsolete name to be removed
+rather than turning a temporary alias into permanent surface area.

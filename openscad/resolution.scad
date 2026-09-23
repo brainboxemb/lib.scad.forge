@@ -74,19 +74,28 @@ module fg_res_scope(
 
 
 // Module: fg_res_apply()
-// Synopsis: Compatibility alias for fg_res_scope().
+// Synopsis: DEPRECATED compatibility alias for fg_res_scope().
 // Usage:
 //   fg_res_apply(FG_RES_HIGH()) CHILDREN;
 // Description:
-//   Preserves the released resolution API. New code should prefer
-//   fg_res_scope(), whose name makes the child-context semantics explicit.
+//   **DEPRECATED.** Use fg_res_scope() instead.
+//   .
+//   This temporary pre-1.0 compatibility API emits a visible deprecation
+//   message when called. It is planned for removal after the compatibility
+//   release once known consumers have migrated.
 // Arguments:
 //   resolution = FG_RES_LOW(), FG_RES_HIGH() or FG_RES_EXPORT().
 module fg_res_apply(
     resolution = FG_RES_HIGH()
-)
+) {
+    echo(str(
+        "DEPRECATED: fg_res_apply() is deprecated; ",
+        "use fg_res_scope() instead."
+    ));
+
     fg_res_scope(resolution)
         children();
+}
 
 
 function _fg_res_is_valid(resolution) =

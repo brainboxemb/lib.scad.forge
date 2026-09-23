@@ -1,11 +1,14 @@
 # Forge design
 
-This document explains how Forge realises the contracts in
-[10-specification.md](10-specification.md).
+This document explains the **library-level architecture** used to realise the
+intent in [10-specification.md](10-specification.md).
+
+Detailed implementation of a functional area belongs in a numbered detailed
+design when it is substantial enough to deserve one.
 
 ## Library decomposition
 
-Forge keeps the public concerns independent:
+Forge separates its public modeling concerns into focused entrypoints:
 
 ```text
 openscad/
@@ -16,152 +19,44 @@ openscad/
 └── forge.scad
 ```
 
-`forge.scad` includes the four focused entrypoints. Each focused entrypoint is
-designed to remain usable on its own.
+`forge.scad` is the umbrella entrypoint. The four focused entrypoints remain
+independently usable with normal OpenSCAD `use`.
 
-Public API documentation is kept beside these source files using the
-`openscad_docsgen` comment format. The generated reference explains how to call
-the API; this design document explains implementation choices and rationale.
+This keeps a consumer free to depend only on the modeling capability it needs
+and prevents hidden coupling between otherwise independent concerns.
 
-## Resolution context design
+## Responsibility split
 
-The canonical API is:
+| Area | Responsibility | Detailed design |
+| --- | --- | --- |
+| Resolution | semantic geometry-detail context | [21-resolution-context.md](21-resolution-context.md) |
+| Transforms | readable placement, rotation, reflection and coordinate frames | source/API remains sufficient for now |
+| Tagged CSG | explicit body/remove/keep construction roles | source/API remains sufficient for now |
+| Cutters | generic overlap-aware box/cylinder subtraction helpers | source/API remains sufficient for now |
 
-```scad
-fg_res_scope(resolution)
-    child_geometry();
-```
+Do not create detailed-design documents for the other areas until their
+internal reasoning becomes complex enough that the architecture/API docs are
+no longer sufficient.
 
-The module performs three operations:
+## API and source documentation
 
-1. validate the semantic resolution token;
-2. establish Forge's `$fn/$fa/$fs` policy;
-3. evaluate its children inside that context.
+Public API/reference documentation lives beside the owning `.scad` source
+using `openscad_docsgen` structured comments.
 
-Conceptually:
+The layers deliberately serve different questions:
 
-```text
-caller context
-    ↓
-fg_res_scope(resolution)
-    ↓ set temporary Forge tessellation context
-child geometry
-    ↓
-restore caller context
-```
+- specification: why the capability exists;
+- design: how Forge is decomposed;
+- detailed design: how a complex functional area works internally;
+- source/API docs: exact signatures, parameters, examples and deprecation.
 
-### Why the context is a child module
+## Native OpenSCAD remains part of the design
 
-OpenSCAD tessellation settings are special variables consumed by geometry
-created below the call. A normal Forge function cannot establish that dynamic
-geometry context for later unrelated statements.
+Forge is intentionally not an abstraction boundary around all OpenSCAD.
 
-A child module gives the context an explicit lifetime: exactly the geometry
-passed as children.
+Native `difference()`, `translate()`, `rotate()`, `multmatrix()` and other
+language constructs remain appropriate when they express the operation more
+directly than a Forge helper.
 
-### Why one child does not need braces
-
-OpenSCAD modules accept a single following child statement directly:
-
-```scad
-fg_res_scope(resolution)
-    _part_geometry(part_obj);
-```
-
-That is the preferred shape when one private geometry helper owns the complete
-part.
-
-When several sibling statements belong to the same scope, OpenSCAD braces group
-those siblings:
-
-```scad
-fg_res_scope(resolution) {
-    first_part();
-    second_part();
-}
-```
-
-The grouping belongs to the caller's geometry structure, not to the Forge
-resolution mechanism itself. Forge therefore does not prescribe braces merely
-to make the word 'scope' visually obvious.
-
-This distinction is part of contract `RES-CTX-05`.
-
-### Internal `let()` choice
-
-`fg_res_scope()` currently establishes the special-variable context with:
-
-```scad
-let(
-    $fn = 0,
-    $fa = ...,
-    $fs = ...
-)
-    children();
-```
-
-This internal `let()` is deliberately retained for this change.
-
-OpenSCAD issue
-[openscad/openscad#5916](https://github.com/openscad/openscad/issues/5916)
-discusses cases where ordinary assignments can replace statement-style
-`let()`. That does not by itself prove that changing Forge's special-variable
-child-context implementation improves clarity or preserves all supported
-behavior.
-
-The resolution-context verification therefore first qualifies:
-
-- child visibility of `$fn/$fa/$fs`;
-- caller restoration;
-- nested restoration;
-- one-child syntax without braces;
-- grouped multiple-child syntax.
-
-A future simplification of the internal implementation can be considered
-separately while keeping those contracts fixed.
-
-### Compatibility alias
-
-`fg_res_apply()` forwards its children through `fg_res_scope()`:
-
-```text
-existing consumer
-    fg_res_apply(...)
-        child
-          ↓
-compatibility wrapper
-          ↓
-fg_res_scope(...)
-        child
-```
-
-This keeps released consumers source-compatible while giving new code a name
-that describes the context semantics rather than sounding like an ordinary
-one-shot operation.
-
-## Transform design
-
-Forge transform helpers are intentionally thin. They label common placement and
-orientation intent rather than introducing a second geometry system.
-
-`fg_xf_frame()` uses explicit destination axes because axis mapping is the
-semantic content of that operation. Simple rotations stay simple rotations.
-
-## Tagged CSG design
-
-Tagged CSG uses child roles to make a meaningful construction read as:
-
-```text
-body - remove + keep
-```
-
-Native `difference()` remains appropriate for local primitive construction,
-crop/section operations or explanatory differences where child roles would add
-ceremony rather than meaning.
-
-## Cutter design
-
-Cutter specifications keep overlap selection in local cutter coordinates.
-Placement/rotation is applied after the local overlap expansion. This makes
-tokens such as left/right/top/radial stable regardless of where the cutter is
-later placed.
+This prevents the shared library from growing wrappers whose only purpose is
+uniformity.

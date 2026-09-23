@@ -4,7 +4,7 @@
 
 ### Added
 
-- Add the numbered `doc/` engineering set: plan, specification, design and verification.
+- Add the numbered `doc/` engineering set and a first detailed design for the resolution context.
 - Add canonical `fg_res_scope()` for explicit child resolution-context semantics while retaining `fg_res_apply()` as a compatibility alias.
 - Add exact resolution scope/restoration/nesting verification, including one-child syntax without braces and grouped sibling syntax with braces.
 - Move the source verification strategy from `vrf/verification-plan.md` to the numbered `doc/30-verification.md`; `vrf/` now owns execution and generated evidence only.
@@ -13,7 +13,16 @@
 - Add `scripts/build-api-docs.sh` to generate the Forge API/reference set with
   the `openscad-docsgen` command already provided by the shared SCAD runtime.
 
+### Deprecated
+
+- Deprecate `fg_res_apply()` in favor of `fg_res_scope()`. Deprecated calls
+  emit a visible migration message. Forge is pre-1.0; after one compatibility
+  release and migration of known consumers, the duplicate API is planned for
+  removal in the following minor release.
+
 ### Changed
+
+- Refine Forge documentation roles: specification now explains why the library and functional areas exist, architecture stays in `20-design.md`, and resolution implementation detail moves to `21-resolution-context.md`.
 
 - Keep machine-test STL/SVG renders temporary instead of publishing one geometry
   artifact per test at the root of `prod/vrf`; published verification now

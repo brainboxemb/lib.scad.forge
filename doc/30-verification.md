@@ -1,124 +1,112 @@
 # Forge verification
 
-This document defines the verification strategy for Forge. Generated output
-under `vrf/out/` is evidence from this plan; it is not the source authority.
+This document defines how Forge checks that its specification and design intent
+are actually realised. Generated output under `vrf/out/` is evidence from this
+document; it is not the source authority.
 
 Related documents:
 
-- [00-plan.md](00-plan.md) — purpose, scope and working method;
-- [10-specification.md](10-specification.md) — contracts being proven;
-- [20-design.md](20-design.md) — implementation model.
+- [00-plan.md](00-plan.md) — work context;
+- [10-specification.md](10-specification.md) — why the capabilities exist;
+- [20-design.md](20-design.md) — library architecture;
+- [21-resolution-context.md](21-resolution-context.md) — resolution detailed design.
 
 ## Verification model
 
-Forge verification has two deliberately separate layers.
+Forge uses two deliberately separate evidence types.
 
 ### Machine verification
 
-Machine checks answer questions that can be decided exactly or mechanically:
+Use exact/machine checks for behavior that can be decided mechanically:
 
-- does every public entrypoint parse and generate the expected geometry type;
-- do semantic resolution tokens select the exact shared tessellation policy;
-- do resolution contexts obey child/restoration/nesting contracts;
-- do transform families, including 2D plane-aware moves, execute successfully;
-- do tagged CSG and cutter object/direct forms survive a real OpenSCAD render;
-- do overlap token sets retain all requested faces/regions;
-- does the umbrella entrypoint expose the combined API without hidden
-  sub-entrypoint coupling.
+- public entrypoints parse and generate the expected geometry type;
+- semantic resolution selects the intended tessellation policy;
+- resolution context obeys child, restoration and nesting behavior;
+- transform families execute successfully;
+- tagged CSG and cutter forms survive a real OpenSCAD render;
+- overlap token sets retain the requested regions;
+- the umbrella entrypoint exposes the combined API.
 
-Where a real CGAL build is useful, verification may render temporary STL files.
-Those files are test intermediates and are not publication evidence.
-
-2D-only transform checks render temporary SVG instead of forcing 2D geometry
-through an STL export.
+Temporary STL/SVG files may be generated to force real OpenSCAD/CGAL work.
+They are test intermediates, not automatically publication evidence.
 
 ### Human verification
 
-Human evidence answers questions where visual inspection is useful:
+Use curated PNG evidence where visual inspection contributes something useful:
 
-- are ordinary transform effects and orientation semantics visually plausible;
-- is a coordinate frame visibly different from using a simple one-axis
-  rotation as a generic substitute;
-- does tagged CSG communicate the expected body/remove/keep result;
-- do named cutter overlap regions extend in the intended local directions;
-- do low/high/export resolution levels show increasing tessellation detail.
+- representative transform/orientation behavior;
+- coordinate-frame meaning;
+- tagged CSG construction/result;
+- cutter overlap directions;
+- visible low/high/export tessellation progression.
 
-Human evidence is a small curated PNG set organized by verification question,
-not one image per API symbol.
+Do not create one image per API symbol merely to mirror the source tree.
 
-## Resolution-context traceability
+## Resolution context and policy
 
-| Contract | Verification question | Evidence |
-| --- | --- | --- |
-| `RES-LEVEL-01` / `RES-POLICY-01` | Are low/high/export tokens and exact `$fn/$fa/$fs` values unchanged? | assertions in `test/resolution.scad` |
-| `RES-CTX-01` | Can the canonical public scope establish policy for child geometry? | one-child scope testcase |
-| `RES-CTX-02` | Can child helpers inherit the active policy without receiving another resolution argument? | child assertion module in `test/resolution.scad` |
-| `RES-CTX-03` | Does the resolution context stop at the child boundary? | caller restoration assertions |
-| `RES-CTX-04` | Does an inner context restore the outer context for later siblings? | nested-context assertions |
-| `RES-CTX-05` | Does one child work without braces and do braces correctly group multiple siblings? | separate ungrouped/grouped scope cases |
-| `RES-CTX-06` | Does the compatibility alias preserve the canonical behavior? | `fg_res_apply()` compatibility case |
-| `RES-CTX-07` | Are resolution changes tessellation-only? | exact policy assertions plus visual `resolution-levels.png` |
+The specification section
+[Why semantic resolution exists](10-specification.md#why-semantic-resolution-exists)
+and the detailed design
+[Resolution context](21-resolution-context.md)
+are exercised by `test/resolution.scad` and the verification runner.
 
-The exact scope/restoration checks are machine evidence. PNGs are not used to
-prove special-variable scoping.
+| Verification question | Evidence |
+| --- | --- |
+| Do low/high/export select the concrete policy documented by the detailed design? | exact `$fn/$fa/$fs` assertions |
+| Can a public scope establish that policy for child geometry? | one-child scope case |
+| Can private child helpers inherit the active context? | child assertion module |
+| Does the caller context return after the child? | restoration assertions |
+| Does a nested scope restore the outer context afterward? | nested-context assertions |
+| Does one child work without braces? | ungrouped child case |
+| Do braces correctly group multiple siblings under one scope? | grouped sibling case |
+| Does the deprecated alias preserve behavior while making migration visible? | `fg_res_apply()` compatibility case plus required deprecation log message |
 
-## Other verification questions and evidence
+The exact scope/restoration behavior is machine evidence; PNGs are not used to
+prove special-variable lifetime.
 
-| Area | Verification question | Machine evidence | Human evidence |
+## Other verification questions
+
+| Specification/design area | Verification question | Machine evidence | Human evidence |
 | --- | --- | --- | --- |
-| Placement and rotation | Do ordinary moves, axis moves, rotations and flips execute as valid geometry operations? | every transform variant in `test/transform.scad` is exported | `transforms-overview.png` |
-| 2D project planes | Do XY, XZ and YZ 2D placement helpers remain independently usable as 2D operations? | temporary SVG exports for `move2d`, `xzmove`, and `yzmove` | none unless a future risk requires it |
-| Coordinate frames | Do direct and object frame APIs preserve explicit local-axis remapping semantics? | direct and object frame variants render successfully | `coordinate-frame.png` |
-| Tagged CSG | Does `fg_diff()` produce `(body - remove) + keep`? | render of `test/csg.scad` | `tagged-csg.png` |
-| Cutter overlap | Are direct/object cutter forms valid and are named overlap tokens retained independently? | assertions and real renders in `test/cutter.scad` | `cutters-overlap.png` |
-| Umbrella entrypoint | Can a consumer use all API families through `forge.scad` together? | render of `test/umbrella.scad` | none; this is an API composition concern |
+| Transform intent | Do ordinary moves, axis moves, rotations and flips execute as valid operations? | every transform variant in `test/transform.scad` is exported | `transforms-overview.png` |
+| 2D project planes | Do XY, XZ and YZ placement helpers remain independently usable as 2D operations? | temporary SVG exports | none unless a future risk requires it |
+| Coordinate frames | Do direct and object frame APIs preserve explicit local-axis remapping? | direct/object frame renders | `coordinate-frame.png` |
+| Tagged CSG | Does body/remove/keep produce the intended construction result? | `test/csg.scad` render | `tagged-csg.png` |
+| Cutter robustness | Are cutter forms valid and overlap-token membership independent? | cutter assertions/renders | `cutters-overlap.png` |
+| Umbrella API | Can a consumer use all public families through `forge.scad` together? | `test/umbrella.scad` render | none; API composition is mechanical |
 
 ## Evidence interpretation
 
-Some contracts should not be judged from pixels.
+Some facts should not be judged from pixels.
 
-The default `FG_OVERLAP_MM()` value is 0.001 mm. That is intentionally too
-small to be useful as visual evidence. The exact value remains an assertion.
-The cutter PNG uses a larger explicit `overlap_mm` only to make selected local
-directions inspectable.
+The default cutter overlap is 0.001 mm. That value is intentionally too small
+for useful visual evidence and remains an assertion. The cutter PNG uses a
+larger explicit overlap only to make selected local directions visible.
 
-Likewise, PNGs do not prove exact transforms, dimensions or policy values. They
-are review evidence for semantics and gross regressions; assertions and
-successful OpenSCAD exports remain the machine proof for exact contracts.
+Likewise, PNGs do not prove exact transforms, dimensions or policy values.
+They are review evidence for semantics and gross regressions.
 
 ## Published verification output
 
-The intended published snapshot is compact:
+The intended published snapshot is:
 
 ```text
 prod/vrf/
 ├── README.md
 ├── 30-verification.md
 ├── png/
-│   ├── transforms-overview.png
-│   ├── coordinate-frame.png
-│   ├── tagged-csg.png
-│   ├── cutters-overlap.png
-│   └── resolution-levels.png
 ├── evidence/
 ├── orchestration/
 └── publication-info.txt
 ```
 
-The published `30-verification.md` is a copy for self-contained evidence. The
-source authority remains `doc/30-verification.md`.
-
-Temporary STL/SVG machine outputs are created outside `vrf/out/` and removed
-after verification. They therefore do not become part of `prod/vrf`.
+The published `30-verification.md` is a copy for a self-contained evidence
+snapshot. The source authority remains `doc/30-verification.md`.
 
 ## Change rules
 
-Update this document when a public Forge behavior introduces a new verification
-risk or changes what counts as meaningful evidence.
+Update this document when a Forge behavior introduces a new verification risk
+or changes what counts as meaningful evidence.
 
-Add a published PNG only when it gives a maintainer something useful to inspect.
-Do not mirror the API surface mechanically in verification output.
-
-A passing visual render does not replace an assertion where a value can be
-checked exactly, and a passing machine render does not automatically justify
-publishing its geometry artifact.
+A passing visual render does not replace an exact assertion, and a passing
+machine render does not automatically justify publishing its geometry artifact.
