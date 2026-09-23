@@ -5,10 +5,11 @@ context, transforms, tagged CSG and overlap-aware cutters.
 
 ## Start here
 
-- [Plan](doc/00-plan.md) — work method, information sources, current focus and roadmap.
-- [Specification](doc/10-specification.md) — why Forge and its functional areas exist.
-- [Design](doc/20-design.md) — library architecture and responsibility split.
-- [Verification](doc/30-verification.md) — how intent and design are checked.
+- [Documentation index](doc/README.md) — local manuals, specification, design and verification map.
+- [Plan](doc/10-00-plan.md) — work method, information sources, current focus and roadmap.
+- [Specification](doc/30-00-specification.md) — why Forge and its functional areas exist.
+- [Design](doc/40-00-design.md) — library architecture and responsibility split.
+- [Verification](doc/50-00-verification.md) — how intent and design are checked.
 
 Public API/reference documentation lives beside the owning `.scad` source in
 `openscad/` using the `openscad_docsgen` format. Generate the local reference

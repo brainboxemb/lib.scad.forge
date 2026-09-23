@@ -1,7 +1,7 @@
 # Forge design
 
 This document explains the **library-level architecture** used to realise the
-intent in [10-specification.md](10-specification.md).
+intent in [30-00-specification.md](30-00-specification.md).
 
 Detailed implementation of a functional area belongs in a numbered detailed
 design when it is substantial enough to deserve one.
@@ -29,7 +29,7 @@ and prevents hidden coupling between otherwise independent concerns.
 
 | Area | Responsibility | Detailed design |
 | --- | --- | --- |
-| Resolution | semantic geometry-detail context | [20-01-resolution-context.md](20-01-resolution-context.md) |
+| Resolution | semantic geometry-detail context | [40-01-resolution-context.md](40-01-resolution-context.md) |
 | Transforms | readable placement, rotation, reflection and coordinate frames | source/API remains sufficient for now |
 | Tagged CSG | explicit body/remove/keep construction roles | source/API remains sufficient for now |
 | Cutters | generic overlap-aware box/cylinder subtraction helpers | source/API remains sufficient for now |

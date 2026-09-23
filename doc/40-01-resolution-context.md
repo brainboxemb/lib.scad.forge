@@ -1,7 +1,7 @@
 # Resolution context detailed design
 
 This document describes how Forge implements the semantic resolution intent
-from [10-specification.md](10-specification.md#why-semantic-resolution-exists).
+from [30-00-specification.md](30-00-specification.md#why-semantic-resolution-exists).
 
 ## Public shape
 
@@ -117,4 +117,4 @@ release before removal after known consumers have migrated.
 ## Verification
 
 The relevant machine checks and published evidence are described in
-[30-verification.md](30-verification.md#resolution-context-and-policy).
+[50-00-verification.md](50-00-verification.md#resolution-context-and-policy).
