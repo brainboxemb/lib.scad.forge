@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## v0.3.1
+
 ### Added
 
 - Add the numbered `doc/` engineering set and a first detailed design for the resolution context.
