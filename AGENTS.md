@@ -2,9 +2,8 @@
 
 Start with the Forge-local engineering context:
 
-1. read [doc/00-plan.md](doc/00-plan.md);
-2. follow its links to the relevant specification, design, detailed design,
-   verification and source/API documentation.
+1. read [doc/10-00-plan.md](doc/10-00-plan.md);
+2. use [doc/README.md](doc/README.md) to route to the relevant manual, specification, design, detailed design, verification and source/API documentation.
 
 For shared BrainboxEmb working conventions, read
 [brainboxemb.meta/AGENTS.md](https://github.com/brainboxemb/brainboxemb.meta/blob/main/AGENTS.md).

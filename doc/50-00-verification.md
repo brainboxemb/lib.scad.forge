@@ -6,10 +6,10 @@ document; it is not the source authority.
 
 Related documents:
 
-- [00-plan.md](00-plan.md) — work context;
-- [10-specification.md](10-specification.md) — why the capabilities exist;
-- [20-design.md](20-design.md) — library architecture;
-- [20-01-resolution-context.md](20-01-resolution-context.md) — resolution detailed design.
+- [10-00-plan.md](10-00-plan.md) — work context;
+- [30-00-specification.md](30-00-specification.md) — why the capabilities exist;
+- [40-00-design.md](40-00-design.md) — library architecture;
+- [40-01-resolution-context.md](40-01-resolution-context.md) — resolution detailed design.
 
 ## Verification model
 
@@ -45,9 +45,9 @@ Do not create one image per API symbol merely to mirror the source tree.
 ## Resolution context and policy
 
 The specification section
-[Why semantic resolution exists](10-specification.md#why-semantic-resolution-exists)
+[Why semantic resolution exists](30-00-specification.md#why-semantic-resolution-exists)
 and the detailed design
-[Resolution context](20-01-resolution-context.md)
+[Resolution context](40-01-resolution-context.md)
 are exercised by `test/resolution.scad` and the verification runner.
 
 | Verification question | Evidence |
@@ -93,15 +93,15 @@ The intended published snapshot is:
 ```text
 prod/vrf/
 ├── README.md
-├── 30-verification.md
+├── 50-00-verification.md
 ├── png/
 ├── evidence/
 ├── orchestration/
 └── publication-info.txt
 ```
 
-The published `30-verification.md` is a copy for a self-contained evidence
-snapshot. The source authority remains `doc/30-verification.md`.
+The published `50-00-verification.md` is a copy for a self-contained evidence
+snapshot. The source authority remains `doc/50-00-verification.md`.
 
 ## Change rules
 

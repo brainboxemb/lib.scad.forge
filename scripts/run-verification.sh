@@ -94,15 +94,15 @@ for view in transforms-overview coordinate-frame tagged-csg cutters-overlap reso
   test -s "$output"
 done
 
-cp "$root/doc/30-verification.md" "$out/30-verification.md"
+cp "$root/doc/50-00-verification.md" "$out/50-00-verification.md"
 
 cat > "$out/README.md" <<'EOF'
 # Forge verification
 
 This snapshot contains human-facing Forge verification evidence.
 
-The source verification strategy is maintained in `doc/30-verification.md`.
-A copy is included here as [30-verification.md](30-verification.md) so the
+The source verification strategy is maintained in `doc/50-00-verification.md`.
+A copy is included here as [50-00-verification.md](50-00-verification.md) so the
 evidence snapshot remains self-contained.
 
 Machine smoke tests also run for every public entrypoint and transform/cutter
@@ -154,5 +154,5 @@ The verification run also checks:
 - direct/object cutter forms and independent overlap-token membership;
 - the umbrella `forge.scad` entrypoint combining all API families.
 
-See [30-verification.md](30-verification.md) for the intent/design/evidence mapping.
+See [50-00-verification.md](50-00-verification.md) for the intent/design/evidence mapping.
 EOF

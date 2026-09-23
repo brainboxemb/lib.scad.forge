@@ -4,7 +4,7 @@ This document explains **why Forge exists**, what it is trying to improve, and
 why its main functional areas belong in the library.
 
 For current work sequencing and information sources, start with
-[00-plan.md](00-plan.md).
+[10-00-plan.md](10-00-plan.md).
 
 ## Why Forge exists
 
@@ -56,7 +56,7 @@ The important intent is:
   feature meaning.
 
 The detailed scope mechanism and concrete tessellation policy are design
-details documented in [20-01-resolution-context.md](20-01-resolution-context.md).
+details documented in [40-01-resolution-context.md](40-01-resolution-context.md).
 
 ## Why transform helpers exist
 
