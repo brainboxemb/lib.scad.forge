@@ -56,12 +56,14 @@ verification remains authoritative for Forge's supported behavior.
 
 ## Current focus
 
-The current work is converging the resolution-context API on
-`fg_res_scope()` and removing the older `fg_res_apply()` name without leaving
-two permanent APIs for the same concept.
+Migration 010 is complete; Forge is no longer carrying temporary canary/rollout
+work for the shared documentation model.
 
-`fg_res_apply()` is deprecated, emits a visible migration message, and exists
-only for the short pre-1.0 transition.
+The current Forge-local focus is pre-1.0 API cleanup. Resolution context is
+converging on `fg_res_scope()`, with deprecated `fg_res_apply()` retained only
+for the short compatibility window. The remaining `fg_overlap_mm()`
+compatibility alias is tracked separately in issue #30 so duplicate APIs do not
+become permanent surface area.
 
 ## Roadmap
 
@@ -71,11 +73,12 @@ Near-term:
    deprecated;
 2. migrate known BrainboxEmb consumers;
 3. remove `fg_res_apply()` in the following pre-1.0 minor release;
-4. continue using Forge as an early canary for the shared SCAD documentation
-   structure.
+4. retire the remaining `fg_overlap_mm()` compatibility alias through issue
+   #30 rather than retaining two overlap APIs indefinitely.
 
 Current intended cadence is deprecation in v0.4.0 and removal in v0.5.0. If
 release numbering changes before publication, preserve the policy of one
 compatibility release followed by removal.
 
-Broader documentation/template rollout belongs to `brainboxemb.meta`.
+The shared documentation rollout completed under
+`brainboxemb.meta` Migration 010 and is no longer Forge-local work.

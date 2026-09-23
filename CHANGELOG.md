@@ -22,6 +22,7 @@
 
 ### Changed
 
+- Complete the Forge-local post-Migration-010 documentation review: remove obsolete canary/rollout wording from the plan and track the remaining `fg_overlap_mm()` compatibility-alias retirement separately in issue #30.
 - Align Forge with Migration 010 agent/document guidance: route shared working rules through `brainboxemb.meta`, do not inherit dependency-owner AGENTS instructions, and use the `20-xx` detailed-design numbering family.
 - Refine Forge documentation roles: specification now explains why the library and functional areas exist, architecture stays in `20-design.md`, and resolution implementation detail lives in `20-01-resolution-context.md`.
 
