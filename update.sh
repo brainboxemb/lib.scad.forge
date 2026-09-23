@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Managed-Source: brainboxemb/tool.git-project/bootstrap/consumer-update.sh
-# Managed-Source-Version: v0.2.13
-# Managed-Source-Revision: c048ae38516da78fcea138cf63ce1426831ea815
+# Managed-Source-Version: v0.2.14
+# Managed-Source-Revision: d1ed47c7d85524cfcb2a8f7e1ea81ba106ae9c60
 # Managed-Local-Patch: none
 set -euo pipefail
 
@@ -20,7 +20,9 @@ tool="$tool_root/git-project.sh"
 
 bootstrap_head() {
   [[ -d "$tool_root" ]] || return 1
-  git -C "$tool_root" rev-parse --show-toplevel >/dev/null 2>&1 || return 1
+  local top=""
+  top="$(git -C "$tool_root" rev-parse --show-toplevel 2>/dev/null || true)"
+  [[ "$top" == "$tool_root" ]] || return 1
   git -C "$tool_root" rev-parse HEAD 2>/dev/null
 }
 

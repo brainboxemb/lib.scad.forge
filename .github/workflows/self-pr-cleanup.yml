@@ -12,7 +12,7 @@ permissions:
 
 jobs:
   cleanup:
-    uses: brainboxemb/tool.git-project/.github/workflows/reusable-pr-preview-cleanup.yml@v0.2.13
+    uses: brainboxemb/tool.git-project/.github/workflows/reusable-pr-preview-cleanup.yml@v0.2.14
     with:
       pr_number: ${{ github.event.pull_request.number }}
       preview_suffixes: |

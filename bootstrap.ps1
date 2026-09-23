@@ -1,6 +1,6 @@
 # Managed-Source: brainboxemb/tool.git-project/bootstrap/consumer-bootstrap.ps1
-# Managed-Source-Version: v0.2.13
-# Managed-Source-Revision: c048ae38516da78fcea138cf63ce1426831ea815
+# Managed-Source-Version: v0.2.14
+# Managed-Source-Revision: d1ed47c7d85524cfcb2a8f7e1ea81ba106ae9c60
 # Managed-Local-Patch: none
 $ErrorActionPreference = "Stop"
 
@@ -22,11 +22,15 @@ $Current = $null
 if (Test-Path -LiteralPath $ToolRoot -PathType Container) {
     $Top = (& git -C $ToolRoot rev-parse --show-toplevel 2>$null | Select-Object -First 1)
     if ($LASTEXITCODE -eq 0 -and $Top) {
-        $Current = ((& git -C $ToolRoot rev-parse HEAD 2>$null | Select-Object -First 1).Trim().ToLowerInvariant())
-        $Dirty = (& git -C $ToolRoot status --porcelain 2>$null)
-        if ($LASTEXITCODE -ne 0) { throw "Unable to inspect bootstrap engine state." }
-        if ($Dirty) {
-            throw "Bootstrap engine 'tool.git-project' has local changes; refusing to align it to the committed gitlink."
+        $ResolvedTop = (Resolve-Path -LiteralPath $Top.Trim()).Path
+        $ResolvedToolRoot = (Resolve-Path -LiteralPath $ToolRoot).Path
+        if ($ResolvedTop -eq $ResolvedToolRoot) {
+            $Current = ((& git -C $ToolRoot rev-parse HEAD 2>$null | Select-Object -First 1).Trim().ToLowerInvariant())
+            $Dirty = (& git -C $ToolRoot status --porcelain 2>$null)
+            if ($LASTEXITCODE -ne 0) { throw "Unable to inspect bootstrap engine state." }
+            if ($Dirty) {
+                throw "Bootstrap engine 'tool.git-project' has local changes; refusing to align it to the committed gitlink."
+            }
         }
     }
 }
