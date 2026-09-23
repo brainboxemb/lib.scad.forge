@@ -22,7 +22,7 @@ Transforms form the `fg_xf_*` subfamily. Keep that grouping visible rather
 than reintroducing a separate top-level `xf_*` namespace.
 
 Fixed public token symbols are the narrow exception: use callable
-`FG_*`() constants such as `FG_LEFT()`. OpenSCAD requires the parentheses
+`FG_*()` constants such as `FG_LEFT()`. OpenSCAD requires the parentheses
 because normal `use` imports functions/modules but not global variables; the
 uppercase spelling communicates constant/enum semantics.
 
@@ -74,9 +74,24 @@ shared toolchain.
 
 ## Verification
 
+`vrf/verification-plan.md` is the source of truth for Forge verification
+reasoning: risks, questions, proof type, published evidence and intentional
+exclusions. Update the plan when a public behavior changes what must be proven
+or when the evidence strategy changes.
+
+Keep machine checks and human evidence distinct:
+
+- `test/*.scad` owns exact assertions and functional/API smoke checks;
+- temporary STL/SVG files may be used to force real OpenSCAD geometry/export,
+  but they must stay outside `vrf/out/`;
+- `vrf/openscad/` owns deliberately composed human verification scenes;
+- published visual evidence belongs under `vrf/out/png/`;
+- do not create one published artifact per API symbol unless each artifact
+  answers a genuinely distinct verification question.
+
 Verification must exercise the umbrella entrypoint and every direct
-sub-entrypoint, including all three geometry-resolution levels. Opposite box
-faces must be tested together so overlap token membership cannot regress into
-vector-cancellation behavior.
+sub-entrypoint, including all three geometry-resolution levels and the 2D
+plane-aware transform helpers. Opposite box faces must be tested together so
+overlap token membership cannot regress into vector-cancellation behavior.
 
 Generated evidence belongs under `vrf/out/`.

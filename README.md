@@ -84,6 +84,17 @@ use <openscad/cutter.scad>
 | `FG_LEFT()`, etc. | callable constant tokens for local cutter overlap |
 | `FG_OVERLAP_MM()` | fixed 0.001 mm Boolean robustness allowance |
 
+## Verification
+
+Forge verification is driven by [`vrf/verification-plan.md`](vrf/verification-plan.md).
+The plan records verification questions, risks, machine checks, human-facing
+evidence, and why a particular proof form is appropriate.
+
+Functional/API checks may use temporary STL or SVG output, but those machine
+intermediates are not published. The `prod/vrf` snapshot is intentionally
+human-readable: a compact README, the verification plan, curated PNG evidence,
+and normal provenance/execution evidence.
+
 ## Scope
 
 Forge owns generic modeling mechanics. It does **not** own mechanical
@@ -104,6 +115,7 @@ openscad/
 
 scripts/
   build-api-docs.sh
+  run-verification.sh
 
 test/
   umbrella.scad
@@ -111,4 +123,9 @@ test/
   transform.scad
   csg.scad
   cutter.scad
+
+vrf/
+  verification-plan.md
+  openscad/
+    verification_evidence.scad
 ```
